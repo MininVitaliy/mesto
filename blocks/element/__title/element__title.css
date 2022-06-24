@@ -14,3 +14,9 @@
     max-width: calc(100vw / (1280 / 195));
   }
 }
+
+@media screen and (max-width: 1140px) {
+    .element__title {
+      max-width: calc(100vw / (1280 / 150));
+    }
+  }
