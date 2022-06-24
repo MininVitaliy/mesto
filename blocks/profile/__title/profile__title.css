@@ -1,0 +1,8 @@
+.profile__title {
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: 500;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  margin: 0;
+}
