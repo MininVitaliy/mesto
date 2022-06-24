@@ -1,7 +1,3 @@
 .elements {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, minmax(min-content, 361px));
-  grid-row-gap: 17px;
-  grid-column-gap: 20px;
+  color: #000;
 }

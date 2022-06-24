@@ -1,0 +1,15 @@
+.element__masck-group {
+  max-width: 282px;
+  max-height: 282px;
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  background-position: center center;
+}
+
+@media screen and (max-width: 1279px) {
+  .element__masck-group  {
+    max-width: calc(100vw / (1280 / 282));
+    max-height: calc(100vw / (1280 / 282));
+  }
+}
