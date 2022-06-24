@@ -9,6 +9,7 @@
 /*content - margins*/
 @import url(../blocks/content/__profile/content__profile.css);
 @import url(../blocks/content/__elements/content__elements.css);
+@import url(../blocks/content/__popup/content__popup.css);
 
 /*headef*/
 @import url(../blocks/header/header.css);
@@ -42,3 +43,6 @@
 /*footer*/
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
+
+/*popup*/
+@import url(../blocks/popup/popup.css);
