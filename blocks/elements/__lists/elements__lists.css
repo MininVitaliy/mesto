@@ -3,7 +3,14 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, minmax(min-content, calc(100vw / (1280 / 361))));
+  grid-template-rows: repeat(3, 361);
   grid-row-gap: 17px;
   grid-column-gap: 20px;
+}
+
+@media screen and (max-width: 1279px) {
+  .elements__lists {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, minmax(min-content, calc(100vw / (1280 / 361))));
+  }
 }

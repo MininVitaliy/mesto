@@ -3,4 +3,14 @@
   line-height: 29px;
   font-weight: 900;
   margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 195px;
+}
+
+@media screen and (max-width: 1279px) {
+  .element__title {
+    max-width: calc(100vw / (1280 / 195));
+  }
 }
