@@ -11,6 +11,6 @@
   .profile__grid {
     grid-row-gap: 14px;
     grid-column-gap: 10px;
-    transform: translate(17px, 0);
+    transform: translate(18px, 0);
   }
 }

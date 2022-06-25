@@ -13,6 +13,15 @@
 }
 
 .popup__button-save:hover {
-    background-color: rgba(0, 0, 0, .8);
-    cursor: pointer;
+  background-color: rgba(0, 0, 0, .8);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 560px) {
+  .popup__button-save  {
+    font-size: 14px;
+    line-height: 17px;
+    margin: 45px 0 0;
+    min-height: 46px;
   }
+}

@@ -10,3 +10,10 @@
   padding: 34px 36px 37px;
   border: 0;
 }
+
+@media screen and (max-width: 560px) {
+  .popup__container {
+    min-width: 282px;
+    padding: 25px 22px;
+  }
+}
