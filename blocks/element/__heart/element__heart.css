@@ -1,3 +1,15 @@
 .element__heart {  
   background-size: 20px 19px;
+  transition: opacity .3s linear;
+
 }
+
+.element__heart:hover {
+  opacity: .5;
+  cursor: pointer;
+}
+
+.element__heart:active {
+  cursor: pointer;
+}
+

@@ -7,3 +7,17 @@
   justify-self: flex-start;
   margin: 0;
 }
+
+@media screen and (max-width: 760px) {
+  .profile__text   {
+    justify-self: center;
+    grid-column: 1 / 2;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .profile__text {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

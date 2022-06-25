@@ -6,3 +6,11 @@
   grid-row-gap: 16px;
   grid-column-gap: 18px;
 }
+
+@media screen and (max-width: 760px) {
+  .profile__grid {
+    grid-row-gap: 14px;
+    grid-column-gap: 10px;
+    transform: translate(17px, 0);
+  }
+}

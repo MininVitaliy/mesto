@@ -2,20 +2,20 @@
   margin: 45px 200px 40px;
 }
   
-/*@media screen and (max-width: 1140px) {
+@media screen and (max-width: 1100px) {
   .root__header {
-    padding: 28px 48px 48px;
+    margin: 30px 100px 40px;
   }
 }
     
-@media screen and (max-width: 984px) {
+@media screen and (max-width: 900px) {
   .root__header {
-    padding: 28px 24px 48px;
+    margin: 30px;
   }
 }
     
-@media screen and (max-width: 568px) {
+@media screen and (max-width: 560px) {
   .root__header {
-    padding: 16px 16px 48px;
+    margin: 28px 0 38px;
   }
-}*/
+}

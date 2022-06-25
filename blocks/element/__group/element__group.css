@@ -10,3 +10,9 @@
   min-height: 80px;
   border-radius: 0 0 10px 10px;
 }
+
+@media screen and (max-width: 560px) {
+  .element__group  {
+    padding-right: 30px;
+  }
+}
