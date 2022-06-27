@@ -1,33 +1,28 @@
-/*поиск классов*/
+//поиск классов - открытие и закрытие формы
 const popup = document.querySelector('.popup');
-console.log('нашел .popup');
 const profile = document.querySelector('.profile')
 const buttonOpenFormEditing = profile.querySelector('.profile__edit-button');
-console.log('нашел .profile__edit-button');
 const buttonCloseFormEditing = popup.querySelector('.popup__button-close');
-console.log('нашел .popup__button-close');
 
+//поиск классов для сохранения изменений в форму
 let formElement = document.querySelector('.popup');
-console.log(formElement);
-
 const nameInput = popup.querySelector('.popup__form_name');
-console.log('нашел .popup__form_name');
 const jobInput = popup.querySelector('.popup__form_job');
-console.log('нашел .popup__form_job');
 
 
-/*ввод функций*/
+//ввод функций
+//открытие формы
 function openedFormToPopup () {
     popup.classList.add('popup_opened');
     console.log('добавлен класс');
 };
-
+//закрытие формы
 function closedFormToPopup () {
     popup.classList.remove('popup_opened');
     console.log('убран класс');
 };
 
-
+//сохранения формы
 function formSubmitHandler (evt) {
     evt.preventDefault(); 
     nameInput.value;
@@ -44,10 +39,21 @@ function formSubmitHandler (evt) {
 
     closedFormToPopup ()
 };
+//функция закрытия при совпадения target и currentTarget
+const closePpupopOverlay = function (event) {
+    if (event.target !== event.currentTarget) {
+     return
+    }
+    closedFormToPopup () 
+ }
 
-
-/*реакция на действия пользователя*/
+ 
+//реакция на действия пользователя
+//открытие
 buttonOpenFormEditing.addEventListener('click', openedFormToPopup);
+//закрытие
 buttonCloseFormEditing.addEventListener('click', closedFormToPopup);
+//сохранения
 formElement.addEventListener('submit', formSubmitHandler); 
-
+//закрытие при нажатие вне формы (на затемненый экран)
+popup.addEventListener('click', closePpupopOverlay);
