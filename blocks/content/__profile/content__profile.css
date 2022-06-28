@@ -4,18 +4,18 @@
 
 @media screen and (max-width: 1100px) {
   .content__profile {
-    padding: 0 100px 50px;
+    padding: 40px 100px 50px;
   }
 }
 
 @media screen and (max-width: 900px) {
   .content__profile {
-    padding: 0 30px 30px;
+    padding: 40px 30px 30px;
   }
 }
 
 @media screen and (max-width: 560px) {
   .content__profile {
-    padding: 0 19px 36px;
+    padding: 40px 19px 36px;
   }
 }

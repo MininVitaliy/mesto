@@ -9,7 +9,6 @@
 /*content - margins*/
 @import url(../blocks/content/__profile/content__profile.css);
 @import url(../blocks/content/__elements/content__elements.css);
-@import url(../blocks/content/__popup/content__popup.css);
 
 /*headef*/
 @import url(../blocks/header/header.css);

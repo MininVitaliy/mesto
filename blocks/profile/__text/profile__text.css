@@ -6,6 +6,10 @@
   grid-row: 2 / 3;
   justify-self: flex-start;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 320px;
 }
 
 @media screen and (max-width: 760px) {
@@ -19,5 +23,6 @@
   .profile__text {
     font-size: 14px;
     line-height: 17px;
+    max-width: 185px;
   }
 }
