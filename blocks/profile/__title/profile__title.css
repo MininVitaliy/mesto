@@ -8,7 +8,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 294px;
+  max-width: 400px;
+}
+
+@media screen and (max-width: 1279px) {
+  .profile__title {
+    max-width: calc(100vw / 3.2);
+  }
 }
 
 @media screen and (max-width: 560px) {
