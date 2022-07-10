@@ -1,4 +1,7 @@
 .element__heart_active {
-  /*cursor: pointer;*/
   background: url(../../../../images/heart-like.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 22px 19px;
+  padding: 0;
 }
