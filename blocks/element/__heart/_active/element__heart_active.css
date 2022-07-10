@@ -1,0 +1,4 @@
+.element__heart_active {
+  /*cursor: pointer;*/
+  background: url(../../../../images/heart-like.svg);
+}

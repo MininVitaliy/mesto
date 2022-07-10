@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/index.css">
-  <title>Спринт№4 "Место"</title>
+  <title>Спринт№5 "Место - JavaScript"</title>
 </head>
 <body class="root">
   <header class="header root__header">
@@ -27,49 +27,7 @@
 
     <section class="elements content__elements">
       <ul class="elements__lists">
-        <li class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__masck-group" alt="фото замка в Крачаева">
-          <div class="element__group">
-            <h2 class="element__title">Карачаевск</h2>
-            <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1404681-unsplash.jpg" class="element__masck-group" alt="фото горы Эльбрус">
-          <div class="element__group">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1556355-unsplash.jpg" class="element__masck-group" alt="фото ущелья Домбай">
-          <div class="element__group">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
-          </div>
-        </li>
-
-        <li class="element">
-          <img src="./images/gleb-lucky-7SF0nk9ddbY-unsplash.jpg" class="element__masck-group" alt="фото горы Эльбрус">
-          <div class="element__group">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1556355-unsplash.jpg" class="element__masck-group" alt="фото ущелья Домбай">
-          <div class="element__group">
-            <h2 class="element__title">Домбай</h2>
-            <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__masck-group" alt="фото Карачаево-Черкессии">
-          <div class="element__group">
-            <h2 class="element__title">Карачаево-Черкессия</h2>
-            <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
-          </div>
-        </li>
+        
       </ul>
     </section> 
   </main>
@@ -78,19 +36,54 @@
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_opacity">
     <div class="popup__container">
-      <form class="popup__forms" name="form-name-job">
+      <form class="popup__forms popup__forms-input" name="form-name-job">
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" name="name-author" class="popup__form popup__form_new_name" value="">
         <input type="text" name="name-job" class="popup__form popup__form_new_job" value="">
         <button type="submit" aria-label="Сохранить и отпрваить новую форму" class="popup__button-save" 
         name="save">Сохранить</button>
+        <button type="button" aria-label="Закрыть форму" class="popup__button-close"></button></button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_opacity">
+    <div class="popup__container">
+      <form class="popup__forms popup__forms-input" name="form-new-location">
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" name="name-location" class="popup__form popup__form_title"  placeholder="Название" 
+        value="">
+        <input type="url" name="foto-location" class="popup__form popup__form_image" placeholder="Ссылка на картинку">
+        <button type="submit" aria-label="Сохранить и отпрваить новое место" class="popup__button-save" 
+        name="save">Создать</button>
         <button type="button" aria-label="Закрыть форму" class="popup__button-close"></button>
       </form>
     </div>
   </div>
 
+  <div class="popup popup_image">
+    <div class="popup__container">
+      <div class="popup__forms" name="form-new-location">
+        <img src="" class="popup__group" alt="">
+        <h2 class="popup__group-title"></h2>
+        <button type="button" aria-label="Закрыть форму" class="popup__button-close"></button>
+      </div>
+    </div>
+  </div>
+
+  <template class="foto-template">
+    <li class="element">
+      <img class="element__masck-group" alt="фото мест">
+      <button type="button" aria-label="Удалить место" class="element__garbage"></button>
+      <div class="element__group">
+        <h2 class="element__title"></h2>
+        <button type="button" aria-label="Поставить сердечко" class="element__heart"></button>
+      </div>
+    </li>  
+  </template>
+  <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
 
 </body>

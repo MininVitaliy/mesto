@@ -1,5 +1,6 @@
 .root__footer {
   margin: 0 200px 60px;
+  flex-shrink: 0;
 }
 
 @media screen and (max-width: 1100px) {

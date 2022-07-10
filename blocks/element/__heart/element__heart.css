@@ -14,7 +14,8 @@
   cursor: pointer;
 }
 
-.element__heart:active {
+/*.element__heart:active {
   cursor: pointer;
-}
+  background: url(../../../images/heart-like.svg);
+}*/
 

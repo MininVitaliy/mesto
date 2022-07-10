@@ -39,7 +39,7 @@
 
 @media screen and (max-width: 560px) {
   .element__title {
-    max-width: calc(100vw / (1280 / 850));
+    max-width: calc(100vw / (1280 / 800));
   }
 }
 
