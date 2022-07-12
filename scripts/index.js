@@ -1,13 +1,18 @@
 /** упорядочевания классов в selectors */
 const selectors = {
-  popup: '.popup',
+  popupProfil: '.popup__profil-open',
+  popupMesto: '.popup__mesto-open',
+  popupFoto:'.popup_image',
   profile: '.profile',
   profileEditButton: '.profile__edit-button',
   profileAddButton: '.profile__add-button',
-  popupButtonClose: '.popup__button-close',
+  buttonClosePopupProfil: '.popup__profil-close',
+  buttonClosePopupMesto: '.popup__mesto-close',
+  buttonClosePopupFoto: '.popup__foto-close',
   elementHeart: '.element__heart',
   elementsLists: '.elements__lists',
-  popupForms: '.popup__forms',
+  formProfil: '.popup__forms-profil',
+  formMesto: '.popup__forms-mesto',
   popupFormNewName: '.popup__form_new_name',
   popupFormNewJob: '.popup__form_new_job',
   popupFormTitle: '.popup__form_title',
@@ -24,13 +29,19 @@ const selectors = {
 };
 
 /** поиск классов */
-const popups = document.querySelectorAll(selectors.popup);
+const popupProfil = document.querySelector(selectors.popupProfil);
+const popupMesto = document.querySelector(selectors.popupMesto);
+const popupFoto = document.querySelector(selectors.popupFoto);
 const profile = document.querySelector(selectors.profile);
 const buttonOpenFormEditing = profile.querySelector(selectors.profileEditButton);
 const buttonOpenFormMesto = profile.querySelector(selectors.profileAddButton);
-const buttonsForClosingForms = document.querySelectorAll(selectors.popupButtonClose);
+const  buttonClosePopupProfil = document.querySelector(selectors.buttonClosePopupProfil);
+const  buttonClosePopupMesto = document.querySelector(selectors.buttonClosePopupMesto);
+const  buttonClosePopupFoto = document.querySelector(selectors.buttonClosePopupFoto);
 const fotoConteinerLists = document.querySelector(selectors.elementsLists);
-const formElements = document.querySelectorAll(selectors.popupForms);
+const formProfil = document.querySelector(selectors.formProfil);
+const formMesto = document.querySelector(selectors.formMesto);
+const fotoTemplate = document.querySelector(selectors.fotoTemplate).content.querySelector(selectors.element);
 const nameInput = document.querySelector(selectors.popupFormNewName);
 const jobInput = document.querySelector(selectors.popupFormNewJob);
 const titleInput = document.querySelector(selectors.popupFormTitle);
@@ -41,49 +52,44 @@ const groupTitle = document.querySelector(selectors.popupGroupTitle);
 const groupImage = document.querySelector(selectors.popupGroup)
 
 /** открытие формы */
-function openedFormToPopup (index) {
-  popups[index].classList.add('popup_opened');
-  /** присвоение значения указаных на странице в value для каждого title и text*/
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+function openPopup (index) {
+  index.classList.add('popup_opened');
 };
 
 /** закрытие формы */
-function closedFormToPopup (index) {
-  popups[index].classList.remove('popup_opened');
+function closePopup (index) {
+  index.classList.remove('popup_opened');
 };
 
 /** сохранения формы профиль */
-function saveformSubmitProfil (evt) {
+function saveFormProfil (evt) {
   evt.preventDefault(); 
   /**Вставьте новые значения с помощью textConten*/
   profileName.textContent = nameInput.value;
   profileJob.textContent =  jobInput.value;
-  closedFormToPopup(0);
+  closePopup(popupProfil);
 };
 
 /** сохранения формы новое место */
-function saveformSubmitMesto (evt) {
+function saveFormMesto (evt) {
   evt.preventDefault(); 
   /** создаем массив для работы с карточкой, вставляем значения с помощью value в переменые */
-  const newCard = [{name: titleInput.value, link: imageInput.value}];
-  newCard.forEach(createCard);
-  closedFormToPopup(1);
+  addCard({name: titleInput.value, link: imageInput.value});
+  closePopup(popupMesto);
 };
 
 /** функция для создания 6 первых карточек из масива - cards.js */
-function createInitialCards() {
-  initialCards.forEach(createCard);
+function addingInitialCards() {
+  initialCards.forEach(addCard);
 };
-createInitialCards();
+addingInitialCards();
 
-/** функция добавление картинки */
-function createCard(card) {
-  const fotoTemplate = document.querySelector(selectors.fotoTemplate).content;
-  const fotoElement = fotoTemplate.querySelector(selectors.element).cloneNode(true);
+/** функция добавления картинки */
+function addCard(card) {
+  const fotoElement = fotoTemplate.cloneNode(true);
   fotoElement.querySelector(selectors.elementTitle).textContent = card.name;
   fotoElement.querySelector(selectors.elementMasckGroup).src = card.link;
-  fotoElement.querySelector(selectors.elementMasckGroup).alt = 'Фото ' + card.name;
+  fotoElement.querySelector(selectors.elementMasckGroup).alt = `Фото ${card.name}`;
   /** изменения сердечка лайк на закрашенный и обратно */
   fotoElement.querySelector(selectors.elementHeart).addEventListener('click', (event) => {
     event.target.classList.toggle('element__heart_active');
@@ -96,38 +102,33 @@ function createCard(card) {
   fotoElement.querySelector(selectors.elementMasckGroup).addEventListener('click', () => {
     groupTitle.textContent = card.name;
     groupImage.src = card.link;
-    groupImage.alt = 'Фото ' + card.name;
-    openedFormToPopup(2);
+    groupImage.alt = `Фото ${card.name}`;
+    openPopup(popupFoto);
   });
-  /** вставка картинки в начало */
-  fotoConteinerLists.prepend(fotoElement);
+  /** вставка картинки в начало с помощью функции renderCard */
+  renderCard(fotoElement);
 };
 
-/** функция действия по несовпадению target и event.currentTarget*/
-/**const closePpupopOverlay = function (event) {
-  if (event.target !== event.currentTarget) {
-    return
-  };
-  closedFormToPopup (0);
-  closedFormToPopup (1);
-  closedFormToPopup (2);
-};*/
+/** функция вставки картинки в начало */
+function renderCard (card) {
+  fotoConteinerLists.prepend(card);
+};
 
 /** реакция на действия пользователя
 открытие*/
-buttonOpenFormEditing.addEventListener('click', () => openedFormToPopup(0));
-buttonOpenFormMesto.addEventListener('click', () => openedFormToPopup(1));
+buttonOpenFormEditing.addEventListener('click', () => {
+  /** присвоение значения указаных на странице в value для каждого title и text*/
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+  openPopup(popupProfil);
+});
+buttonOpenFormMesto.addEventListener('click', () => openPopup(popupMesto));
 
 /** закрытие */
-buttonsForClosingForms[0].addEventListener('click', () => closedFormToPopup(0));
-buttonsForClosingForms[1].addEventListener('click', () => closedFormToPopup(1));
-buttonsForClosingForms[2].addEventListener('click', () => closedFormToPopup(2));
+buttonClosePopupProfil.addEventListener('click', () => closePopup(popupProfil));
+buttonClosePopupMesto.addEventListener('click', () => closePopup(popupMesto));
+buttonClosePopupFoto.addEventListener('click', () => closePopup(popupFoto));
 
 /** сохранения */
-formElements[0].addEventListener('submit', saveformSubmitProfil); 
-formElements[1].addEventListener('submit', saveformSubmitMesto);
-
-/** закрытие при нажатие вне формы (на затемненый экран)
-popups[0].addEventListener('click', closePpupopOverlay);
-popups[1].addEventListener('click', closePpupopOverlay);
-popups[2].addEventListener('click', closePpupopOverlay);*/
+formProfil.addEventListener('submit', saveFormProfil); 
+formMesto.addEventListener('submit', saveFormMesto);
