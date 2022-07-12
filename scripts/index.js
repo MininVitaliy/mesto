@@ -1,7 +1,7 @@
 /** упорядочевания классов в selectors */
 const selectors = {
-  popupProfil: '.popup__profil',
-  popupMesto: '.popup__mesto',
+  popupProfil: '.popup_open_profil',
+  popupMesto: '.popup_open_mesto',
   popupFoto:'.popup_image',
   profile: '.profile',
   profileEditButton: '.profile__edit-button',
