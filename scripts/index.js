@@ -1,17 +1,17 @@
 /** упорядочевания классов в selectors */
 const selectors = {
-  popupProfil: '.popup_open_profil',
+  popupProfile: '.popup_open_profil',
   popupMesto: '.popup_open_mesto',
   popupFoto:'.popup_image',
   profile: '.profile',
   profileEditButton: '.profile__edit-button',
   profileAddButton: '.profile__add-button',
-  buttonClosePopupProfil: '.popup__profil-close',
+  buttonClosePopupProfile: '.popup__profil-close',
   buttonClosePopupMesto: '.popup__mesto-close',
   buttonClosePopupFoto: '.popup__foto-close',
   elementHeart: '.element__heart',
   elementsLists: '.elements__lists',
-  formProfil: '.popup__forms-profil',
+  formProfile: '.popup__forms-profil',
   formMesto: '.popup__forms-mesto',
   popupFormNewName: '.popup__form_new_name',
   popupFormNewJob: '.popup__form_new_job',
@@ -29,17 +29,17 @@ const selectors = {
 };
 
 /** поиск классов */
-const popupProfil = document.querySelector(selectors.popupProfil);
+const popupProfile = document.querySelector(selectors.popupProfile);
 const popupMesto = document.querySelector(selectors.popupMesto);
 const popupFoto = document.querySelector(selectors.popupFoto);
 const profile = document.querySelector(selectors.profile);
 const buttonOpenFormEditing = profile.querySelector(selectors.profileEditButton);
 const buttonOpenFormMesto = profile.querySelector(selectors.profileAddButton);
-const  buttonClosePopupProfil = document.querySelector(selectors.buttonClosePopupProfil);
-const  buttonClosePopupMesto = document.querySelector(selectors.buttonClosePopupMesto);
-const  buttonClosePopupFoto = document.querySelector(selectors.buttonClosePopupFoto);
+const buttonClosePopupProfile = document.querySelector(selectors.buttonClosePopupProfile);
+const buttonClosePopupMesto = document.querySelector(selectors.buttonClosePopupMesto);
+const buttonClosePopupFoto = document.querySelector(selectors.buttonClosePopupFoto);
 const fotoConteinerLists = document.querySelector(selectors.elementsLists);
-const formProfil = document.querySelector(selectors.formProfil);
+const formProfile = document.querySelector(selectors.formProfile);
 const formMesto = document.querySelector(selectors.formMesto);
 const fotoTemplate = document.querySelector(selectors.fotoTemplate).content.querySelector(selectors.element);
 const nameInput = document.querySelector(selectors.popupFormNewName);
@@ -52,22 +52,22 @@ const groupTitle = document.querySelector(selectors.popupGroupTitle);
 const groupImage = document.querySelector(selectors.popupGroup)
 
 /** открытие формы */
-function openPopup (index) {
-  index.classList.add('popup_opened');
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
 };
 
 /** закрытие формы */
-function closePopup (index) {
-  index.classList.remove('popup_opened');
+function closePopup (popup) {
+  popup.classList.remove('popup_opened');
 };
 
 /** сохранения формы профиль */
-function saveFormProfil (evt) {
+function saveFormProfile (evt) {
   evt.preventDefault(); 
   /**Вставьте новые значения с помощью textConten*/
   profileName.textContent = nameInput.value;
   profileJob.textContent =  jobInput.value;
-  closePopup(popupProfil);
+  closePopup(popupProfile);
 };
 
 /** сохранения формы новое место */
@@ -79,13 +79,20 @@ function saveFormMesto (evt) {
 };
 
 /** функция для создания 6 первых карточек из масива - cards.js */
-function addingInitialCards() {
+function addInitialCards() {
   initialCards.forEach(addCard);
 };
-addingInitialCards();
+addInitialCards();
 
 /** функция добавления картинки */
 function addCard(card) {
+  const variable = createCard (card);
+  /** вставка картинки в начало с помощью функции renderCard */
+  renderCard(variable);
+};
+
+/** функция создания карточки */
+function createCard (card) {
   const fotoElement = fotoTemplate.cloneNode(true);
   fotoElement.querySelector(selectors.elementTitle).textContent = card.name;
   fotoElement.querySelector(selectors.elementMasckGroup).src = card.link;
@@ -105,11 +112,10 @@ function addCard(card) {
     groupImage.alt = `Фото ${card.name}`;
     openPopup(popupFoto);
   });
-  /** вставка картинки в начало с помощью функции renderCard */
-  renderCard(fotoElement);
+  return fotoElement;
 };
 
-/** функция вставки картинки в начало */
+/** функция добавления карточки в начало */
 function renderCard (card) {
   fotoConteinerLists.prepend(card);
 };
@@ -120,15 +126,15 @@ buttonOpenFormEditing.addEventListener('click', () => {
   /** присвоение значения указаных на странице в value для каждого title и text*/
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  openPopup(popupProfil);
+  openPopup(popupProfile);
 });
 buttonOpenFormMesto.addEventListener('click', () => openPopup(popupMesto));
 
 /** закрытие */
-buttonClosePopupProfil.addEventListener('click', () => closePopup(popupProfil));
+buttonClosePopupProfile.addEventListener('click', () => closePopup(popupProfile));
 buttonClosePopupMesto.addEventListener('click', () => closePopup(popupMesto));
 buttonClosePopupFoto.addEventListener('click', () => closePopup(popupFoto));
 
 /** сохранения */
-formProfil.addEventListener('submit', saveFormProfil); 
+formProfile.addEventListener('submit', saveFormProfile); 
 formMesto.addEventListener('submit', saveFormMesto);
