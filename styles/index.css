@@ -63,7 +63,13 @@
 @import url(../blocks/popup/_opacity/popup_opacity.css);
 @import url(../blocks/popup/__forms-input/popup__forms-input.css);
 
+@import url(../blocks/popup/__button-save/_invalid/popup__button-save_invalid.css);
+@import url(../blocks/popup/__button-save/_valid/popup__button-save_valid.css);
 
+@import url(../blocks/popup/__form/_invalid/popup__form_invalid.css);
+@import url(../blocks/popup/__form/_valid/popup__form_valid.css);
+
+@import url(../blocks/popup/__error/popup__error.css);
 
 
 

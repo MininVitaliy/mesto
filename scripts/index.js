@@ -6,9 +6,7 @@ const selectors = {
   profile: '.profile',
   profileEditButton: '.profile__edit-button',
   profileAddButton: '.profile__add-button',
-  buttonClosePopupProfile: '.popup__profil-close',
-  buttonClosePopupMesto: '.popup__mesto-close',
-  buttonClosePopupFoto: '.popup__foto-close',
+  buttonClosePopup: '.popup__button-close',
   elementHeart: '.element__heart',
   elementsLists: '.elements__lists',
   formProfile: '.popup__forms-profil',
@@ -25,7 +23,8 @@ const selectors = {
   element: '.element',
   elementTitle: '.element__title',
   elementMasckGroup: '.element__masck-group',
-  elementGarbage: '.element__garbage'
+  elementGarbage: '.element__garbage',
+  popupOpened: '.popup_opened'
 };
 
 /** поиск классов */
@@ -35,9 +34,9 @@ const popupFoto = document.querySelector(selectors.popupFoto);
 const profile = document.querySelector(selectors.profile);
 const buttonOpenFormEditing = profile.querySelector(selectors.profileEditButton);
 const buttonOpenFormMesto = profile.querySelector(selectors.profileAddButton);
-const buttonClosePopupProfile = document.querySelector(selectors.buttonClosePopupProfile);
-const buttonClosePopupMesto = document.querySelector(selectors.buttonClosePopupMesto);
-const buttonClosePopupFoto = document.querySelector(selectors.buttonClosePopupFoto);
+const buttonClosePopupProfile = popupProfile.querySelector(selectors.buttonClosePopup);
+const buttonClosePopupMesto = popupMesto.querySelector(selectors.buttonClosePopup);
+const buttonClosePopupFoto = popupFoto.querySelector(selectors.buttonClosePopup);
 const fotoConteinerLists = document.querySelector(selectors.elementsLists);
 const formProfile = document.querySelector(selectors.formProfile);
 const formMesto = document.querySelector(selectors.formMesto);
@@ -54,11 +53,16 @@ const groupImage = document.querySelector(selectors.popupGroup)
 /** открытие формы */
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  activForm(popup);
 };
 
 /** закрытие формы */
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
+  popup.querySelectorAll('.popup__form').forEach((strippingValue) => {
+    strippingValue.value = '';
+  });
+  
 };
 
 /** сохранения формы профиль */
@@ -76,6 +80,7 @@ function saveFormMesto (evt) {
   /** создаем массив для работы с карточкой, вставляем значения с помощью value в переменые */
   addCard({name: titleInput.value, link: imageInput.value});
   closePopup(popupMesto);
+  evt.target.reset();
 };
 
 /** функция для создания 6 первых карточек из масива - cards.js */
@@ -97,27 +102,27 @@ function createCard (card) {
   fotoElement.querySelector(selectors.elementTitle).textContent = card.name;
   fotoElement.querySelector(selectors.elementMasckGroup).src = card.link;
   fotoElement.querySelector(selectors.elementMasckGroup).alt = `Фото ${card.name}`;
-  /** изменения сердечка лайк на закрашенный и обратно */
-  fotoElement.querySelector(selectors.elementHeart).addEventListener('click', (event) => {
-    event.target.classList.toggle('element__heart_active');
-  });
-  /** удаление картинки места */
-  fotoElement.querySelector(selectors.elementGarbage).addEventListener('click', () => {
-    fotoElement.remove();
-  });
-  /** открытие попапа с картинкой */
-  fotoElement.querySelector(selectors.elementMasckGroup).addEventListener('click', () => {
-    groupTitle.textContent = card.name;
-    groupImage.src = card.link;
-    groupImage.alt = `Фото ${card.name}`;
-    openPopup(popupFoto);
-  });
   return fotoElement;
 };
 
 /** функция добавления карточки в начало */
 function renderCard (card) {
   fotoConteinerLists.prepend(card);
+};
+
+/** функция действия по несовпадению target и event.currentTarget - Overlay*/
+function closePpupopOverlay  (evt) {
+  if (evt.target !== evt.currentTarget) {
+    return
+  };
+  closePopup(evt.target);
+};
+
+/** функция закрытия попапа при нажатии на Esc*/
+function closePpupopEsc (evt) {
+  if (evt.key === 'Escape') {
+  closePopup(document.querySelector(selectors.popupOpened));
+  };
 };
 
 /** реакция на действия пользователя
@@ -135,6 +140,39 @@ buttonClosePopupProfile.addEventListener('click', () => closePopup(popupProfile)
 buttonClosePopupMesto.addEventListener('click', () => closePopup(popupMesto));
 buttonClosePopupFoto.addEventListener('click', () => closePopup(popupFoto));
 
+/** закрытие - Esc */
+document.addEventListener('keydown', closePpupopEsc);
+
+/** закрытие при нажатие вне формы (на затемненый экран)*/
+popupProfile.addEventListener('click', closePpupopOverlay);
+popupMesto.addEventListener('click', closePpupopOverlay);
+popupFoto.addEventListener('click', closePpupopOverlay);
+
 /** сохранения */
 formProfile.addEventListener('submit', saveFormProfile); 
 formMesto.addEventListener('submit', saveFormMesto);
+
+/** изменения сердечка лайк на закрашенный и обратно - делегирование события  */
+fotoConteinerLists.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__heart')) {
+    evt.target.classList.toggle('element__heart_active');
+  };
+});
+
+/** удаление картинки места - делегирование события  */
+fotoConteinerLists.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__garbage')) {
+    evt.target.parentElement.remove();
+  };
+});
+
+/** открытие попапа с картинкой - делегирование события */
+fotoConteinerLists.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__masck-group')) {
+    const classPopup = evt.target.parentElement;
+    groupTitle.textContent = classPopup.querySelector(selectors.elementTitle).textContent;
+    groupImage.src = classPopup.querySelector(selectors.elementMasckGroup).src;
+    groupImage.alt = `Фото ${classPopup.querySelector(selectors.elementTitle).textContent}`;
+    openPopup(popupFoto);
+  }
+});

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles/index.css">
   <title>Спринт№5 "Место - JavaScript"</title>
+  <script defer src="./scripts/validate.js"></script>
   <script defer src="./scripts/cards.js"></script>
   <script defer src="./scripts/index.js"></script>
 </head>
@@ -40,12 +41,14 @@
 
   <div class="popup popup_opacity popup_open_profil">
     <div class="popup__container">
-      <form class="popup__forms popup__forms-input popup__forms-profil" name="form-name-job">
+      <form class="popup__forms popup__forms-input popup__forms-profil" name="form-name-job" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="name-author" class="popup__form popup__form_new_name" value="" required>
-        <input type="text" name="name-job" class="popup__form popup__form_new_job" value="" required>
-        <button type="submit" aria-label="Сохранить и отпрваить новую форму" class="popup__button-save" 
-        name="save">Сохранить</button>
+        <input type="text" name="name__author" class="popup__form popup__form_new_name" value="" required minlength="2" maxlength="40">
+        <span class="name__author_error"></span>
+        <input type="text" name="name__job" class="popup__form popup__form_new_job" value="" required minlength="2" maxlength="200">
+        <span class="name__job_error"></span>
+        <button type="submit" aria-label="Сохранить и отправить новую форму" class="popup__button-save" 
+        name="name-save">Сохранить</button>
         <button type="button" aria-label="Закрыть форму" class="popup__button-close popup__profil-close"></button>
       </form>
     </div>
@@ -53,13 +56,15 @@
 
   <div class="popup popup_opacity popup_open_mesto">
     <div class="popup__container">
-      <form class="popup__forms popup__forms-input popup__forms-mesto" name="form-new-location">
+      <form class="popup__forms popup__forms-input popup__forms-mesto" name="form-new-location" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="name-location" class="popup__form popup__form_title"  placeholder="Название" 
-        value="" required>
-        <input type="url" name="foto-location" class="popup__form popup__form_image" placeholder="Ссылка на картинку" required>
-        <button type="submit" aria-label="Сохранить и отпрваить новое место" class="popup__button-save" 
-        name="save">Создать</button>
+        <input type="text" name="name__location" class="popup__form popup__form_title"  placeholder="Название" 
+        value="" required minlength="2" maxlength="30">
+        <span class="name__location_error"></span>
+        <input type="url" name="foto__location" class="popup__form popup__form_image" placeholder="Ссылка на картинку" required>
+        <span class="foto__location_error"></span>
+        <button type="submit" aria-label="Сохранить и отправить новое место" class="popup__button-save" 
+        name="save-location">Создать</button>
         <button type="button" aria-label="Закрыть форму" class="popup__button-close popup__mesto-close"></button>
       </form>
     </div>
