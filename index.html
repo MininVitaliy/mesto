@@ -43,10 +43,10 @@
     <div class="popup__container">
       <form class="popup__forms popup__forms-input popup__forms-profil" name="form-name-job" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="text" name="name-author" class="popup__form popup__form_new_name" value="" required minlength="2" maxlength="40">
-        <span class="popup__span name-author__error"></span>
-        <input type="text" name="name-job" class="popup__form popup__form_new_job" value="" required minlength="2" maxlength="200">
-        <span class="popup__span name-job__error"></span>
+        <input type="text" name="popup__span_name-author" class="popup__form popup__form_new_name" value="" required minlength="2" maxlength="40">
+        <span class="popup__span popup__span_name-author_error"></span>
+        <input type="text" name="popup__span_name-job" class="popup__form popup__form_new_job" value="" required minlength="2" maxlength="200">
+        <span class="popup__span popup__span_name-job_error"></span>
         <button type="submit" aria-label="Сохранить и отправить новую форму" class="popup__button-save" 
         name="name-save">Сохранить</button>
         <button type="button" aria-label="Закрыть форму" class="popup__button-close popup__profil-close"></button>
@@ -58,11 +58,11 @@
     <div class="popup__container">
       <form class="popup__forms popup__forms-input popup__forms-mesto" name="form-new-location" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="name-location" class="popup__form popup__form_title" placeholder="Название" 
+        <input type="text" name="popup__span_name-location" class="popup__form popup__form_title" placeholder="Название" 
         value="" required minlength="2" maxlength="30">
-        <span class="popup__span name-location__error"></span>
-        <input type="url" name="foto-location" class="popup__form popup__form_image" placeholder="Ссылка на картинку" required>
-        <span class="popup__span foto-location__error"></span>
+        <span class="popup__span popup__span_name-location_error"></span>
+        <input type="url" name="popup__span_foto-location" class="popup__form popup__form_image" placeholder="Ссылка на картинку" required>
+        <span class="popup__span popup__span_foto-location_error"></span>
         <button type="submit" aria-label="Сохранить и отправить новое место" class="popup__button-save" 
         name="save-location">Создать</button>
         <button type="button" aria-label="Закрыть форму" class="popup__button-close popup__mesto-close"></button>

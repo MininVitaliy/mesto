@@ -60,7 +60,7 @@ function checkInputValidity (formElement, inputElement, activForm) {
 
 /** функция показа ошибок */
 function showInputError (formElement, inputElement, errorMessage, activForm) {
-  const errorElement = formElement.querySelector(`.${inputElement.name}__error`);
+  const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
   inputElement.classList.add(activForm.inputInvalid);
   inputElement.classList.remove(activForm.inputValid);
   errorElement.textContent = errorMessage;
@@ -77,7 +77,7 @@ function showInputError (formElement, inputElement, errorMessage, activForm) {
 
 /** функция скрытия ошибок */
 function hideInputError (formElement, inputElement, activForm) {
-  const errorElement = formElement.querySelector(`.${inputElement.name}__error`);
+  const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
   inputElement.classList.remove(activForm.inputInvalid);
   inputElement.classList.add(activForm.inputValid);
   errorElement.textContent = '';
