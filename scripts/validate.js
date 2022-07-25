@@ -7,7 +7,7 @@ const formProfileValidity = {
   inputValid: 'popup__form_valid',
   inputInvalid: 'popup__form_invalid',
   spanFormLittleLines: 'popup__error_little-lines',
-  spanForm: 'popup__form_span',
+  spanForm: 'popup__span',
   errorClass: 'popup__error',
 };
 
@@ -20,7 +20,7 @@ const formMestoValidity = {
   inputValid: 'popup__form_valid',
   inputInvalid: 'popup__form_invalid',
   spanFormLittleLines: 'popup__error_little-lines',
-  spanForm: 'popup__form_span',
+  spanForm: 'popup__span',
   errorClass: 'popup__error'
 };
 
@@ -60,7 +60,7 @@ function checkInputValidity (formElement, inputElement, activForm) {
 
 /** функция показа ошибок */
 function showInputError (formElement, inputElement, errorMessage, activForm) {
-  const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
+  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
   inputElement.classList.add(activForm.inputInvalid);
   inputElement.classList.remove(activForm.inputValid);
   errorElement.textContent = errorMessage;
