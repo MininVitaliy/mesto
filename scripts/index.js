@@ -24,7 +24,8 @@ const selectors = {
   elementTitle: '.element__title',
   elementMasckGroup: '.element__masck-group',
   elementGarbage: '.element__garbage',
-  popupOpened: '.popup_opened'
+  popupOpened: '.popup_opened',
+  popupForm: '.popup__form'
 };
 
 /** поиск классов */
@@ -59,7 +60,7 @@ function openPopup (popup) {
 /** закрытие формы */
 function closePopup (popup) {
   popup.classList.remove('popup_opened');
-  popup.querySelectorAll('.popup__form').forEach((strippingValue) => {
+  popup.querySelectorAll(selectors.popupForm).forEach((strippingValue) => {
     strippingValue.value = '';
   });
   
@@ -80,7 +81,6 @@ function saveFormMesto (evt) {
   /** создаем массив для работы с карточкой, вставляем значения с помощью value в переменые */
   addCard({name: titleInput.value, link: imageInput.value});
   closePopup(popupMesto);
-  evt.target.reset();
 };
 
 /** функция для создания 6 первых карточек из масива - cards.js */

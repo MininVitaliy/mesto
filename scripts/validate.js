@@ -6,7 +6,9 @@ const formProfileValidity = {
   inputElementForm: '.popup__form',
   inputValid: 'popup__form_valid',
   inputInvalid: 'popup__form_invalid',
-  errorClass: 'popup__error'
+  spanFormLittleLines: 'popup__error_little-lines',
+  spanForm: 'popup__form_span',
+  errorClass: 'popup__error',
 };
 
 const formMestoValidity = {
@@ -17,9 +19,12 @@ const formMestoValidity = {
   inputElementForm: '.popup__form',
   inputValid: 'popup__form_valid',
   inputInvalid: 'popup__form_invalid',
+  spanFormLittleLines: 'popup__error_little-lines',
+  spanForm: 'popup__form_span',
   errorClass: 'popup__error'
 };
 
+/** функция определения открытой формы к какому обьекту относится */
 function activForm (popup) {
   if (popup.classList.contains('popup_open_profil')) {
     enableValidation(formProfileValidity); 
@@ -28,12 +33,9 @@ function activForm (popup) {
   };  
 };
 
+/** запуск валидации только открытой формы */
 function enableValidation (activForm) {
   const formElement = document.querySelector(activForm.form);
-  setEventListeners(formElement, activForm);
-};
-
-function setEventListeners (formElement, activForm) {
   const buttonElement = formElement.querySelector(activForm.button);
   const inputList = Array.from(formElement.querySelectorAll(activForm.inputElementForm));
   inputList.forEach((inputElement) => {
@@ -46,6 +48,7 @@ function setEventListeners (formElement, activForm) {
   toggleButtonState(inputList, buttonElement, activForm);
 };
 
+/** провека input на валидность и вызов соответсвующих функций для показа или скрытия ошибок */
 function checkInputValidity (formElement, inputElement, activForm) {
   hideInputError(formElement, inputElement, activForm);
   if (!inputElement.validity.valid) {
@@ -55,22 +58,38 @@ function checkInputValidity (formElement, inputElement, activForm) {
   }
 }
 
+/** функция показа ошибок */
 function showInputError (formElement, inputElement, errorMessage, activForm) {
-    const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
-    inputElement.classList.add(activForm.inputInvalid);
-    inputElement.classList.remove(activForm.inputValid);
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add(activForm.errorClass);
+  const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
+  inputElement.classList.add(activForm.inputInvalid);
+  inputElement.classList.remove(activForm.inputValid);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(activForm.errorClass);
+  if (errorElement.textContent.length > 60 && errorElement.classList.contains(activForm.spanFormLittleLines)) {
+    errorElement.classList.remove(activForm.spanFormLittleLines);
+    errorElement.classList.add(activForm.spanForm);
   };
-  
+  if (errorElement.textContent.length < 60 && errorElement.classList.contains(activForm.spanForm)) {
+    errorElement.classList.add(activForm.spanFormLittleLines);
+    errorElement.classList.remove(activForm.spanForm);
+  };
+};
+
+/** функция скрытия ошибок */
 function hideInputError (formElement, inputElement, activForm) {
   const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
   inputElement.classList.remove(activForm.inputInvalid);
   inputElement.classList.add(activForm.inputValid);
   errorElement.textContent = '';
   errorElement.classList.remove(activForm.errorClass);
+  if (errorElement.classList.contains(activForm.spanFormLittleLines)) {
+    errorElement.classList.remove(activForm.spanFormLittleLines);
+    errorElement.classList.add(activForm.spanForm);
+  };
 };
-  
+
+/** функция включения или выключения кнопки сохранить в зависимости от валидности или не валидности
+input открытой формы в целом */
 function toggleButtonState (inputList, buttonElement, activForm) {
   if (hasInvalidInput (inputList)) { 
   buttonElement.classList.add(activForm.buttonInvalid);
@@ -83,9 +102,9 @@ function toggleButtonState (inputList, buttonElement, activForm) {
   };
 };
 
+/** функция проверки валидности всех input в открытой форме */
 function hasInvalidInput (inputList) {
   return inputList.some((inputElement) => { 
   return !inputElement.validity.valid;
   });
 };
-  
