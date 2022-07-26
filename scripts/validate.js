@@ -1,5 +1,5 @@
-const formProfileValidity = {
-  form: '.popup_open_profil',
+const forms = {
+  form: '.popup__forms-input',
   button: '.popup__button-save',
   buttonValid: 'popup__button-save_valid',
   buttonInvalid: 'popup__button-save_invalid',
@@ -11,100 +11,109 @@ const formProfileValidity = {
   errorClass: 'popup__error',
 };
 
-const formMestoValidity = {
-  form: '.popup_open_mesto',
-  button: '.popup__button-save',
-  buttonValid: 'popup__button-save_valid',
-  buttonInvalid: 'popup__button-save_invalid',
-  inputElementForm: '.popup__form',
-  inputValid: 'popup__form_valid',
-  inputInvalid: 'popup__form_invalid',
-  spanFormLittleLines: 'popup__error_little-lines',
-  spanForm: 'popup__span',
-  errorClass: 'popup__error'
+/** запуск валидации форм */
+function enableValidation (forms) {
+  const formList = Array.from(document.querySelectorAll(forms.form));
+  formList.forEach((formElement) => {
+    setEventListeners(formElement);
+  });
 };
 
-/** функция определения открытой формы к какому обьекту относится */
-function activForm (popup) {
-  if (popup.classList.contains('popup_open_profil')) {
-    enableValidation(formProfileValidity); 
-  } else if (popup.classList.contains('popup_open_mesto')) {   
-    enableValidation(formMestoValidity);
-  };  
-};
+enableValidation(forms);
 
-/** запуск валидации только открытой формы */
-function enableValidation (activForm) {
-  const formElement = document.querySelector(activForm.form);
-  const buttonElement = formElement.querySelector(activForm.button);
-  const inputList = Array.from(formElement.querySelectorAll(activForm.inputElementForm));
+/** функция поиска input и button для проверки на валидность*/
+function setEventListeners (formElement) {
+  const buttonElement = formElement.querySelector(forms.button);
+  const inputList = Array.from(formElement.querySelectorAll(forms.inputElementForm));
   inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement, activForm);
+    hideInputError(formElement, inputElement, forms);
     inputElement.addEventListener('input', () => {  
-      checkInputValidity(formElement, inputElement, activForm);
-      toggleButtonState(inputList, buttonElement, activForm);
+      checkInputValidity(formElement, inputElement, forms);
+      toggleButtonState(inputList, buttonElement, forms);
     });
   });
-  toggleButtonState(inputList, buttonElement, activForm);
+  toggleButtonState(inputList, buttonElement, forms);
 };
 
-/** провека input на валидность и вызов соответсвующих функций для показа или скрытия ошибок */
-function checkInputValidity (formElement, inputElement, activForm) {
-  hideInputError(formElement, inputElement, activForm);
+/** функция провека input на валидность и вызов соответсвующих функций для показа или скрытия ошибок */
+function checkInputValidity (formElement, inputElement, forms) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage, activForm);
+    showInputError(formElement, inputElement, inputElement.validationMessage, forms);
   } else {
-    hideInputError(formElement, inputElement, activForm);
+    hideInputError(formElement, inputElement, forms);
   }
 }
 
 /** функция показа ошибок */
-function showInputError (formElement, inputElement, errorMessage, activForm) {
+function showInputError (formElement, inputElement, errorMessage, forms) {
   const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
-  inputElement.classList.add(activForm.inputInvalid);
-  inputElement.classList.remove(activForm.inputValid);
+  inputElement.classList.add(forms.inputInvalid);
+  inputElement.classList.remove(forms.inputValid);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(activForm.errorClass);
-  if (errorElement.textContent.length > 60 && errorElement.classList.contains(activForm.spanFormLittleLines)) {
-    errorElement.classList.remove(activForm.spanFormLittleLines);
-    errorElement.classList.add(activForm.spanForm);
+  errorElement.classList.add(forms.errorClass);
+  if (errorElement.textContent.length > 60 && errorElement.classList.contains(forms.spanFormLittleLines)) {
+    errorElement.classList.remove(forms.spanFormLittleLines);
+    errorElement.classList.add(forms.spanForm);
   };
-  if (errorElement.textContent.length < 60 && errorElement.classList.contains(activForm.spanForm)) {
-    errorElement.classList.add(activForm.spanFormLittleLines);
-    errorElement.classList.remove(activForm.spanForm);
+  if (errorElement.textContent.length < 60 && errorElement.classList.contains(forms.spanForm)) {
+    errorElement.classList.add(forms.spanFormLittleLines);
+    errorElement.classList.remove(forms.spanForm);
   };
 };
 
 /** функция скрытия ошибок */
-function hideInputError (formElement, inputElement, activForm) {
+function hideInputError (formElement, inputElement, forms) {
   const errorElement = formElement.querySelector(`.${inputElement.name}_error`);
-  inputElement.classList.remove(activForm.inputInvalid);
-  inputElement.classList.add(activForm.inputValid);
+  inputElement.classList.remove(forms.inputInvalid);
+  inputElement.classList.add(forms.inputValid);
   errorElement.textContent = '';
-  errorElement.classList.remove(activForm.errorClass);
-  if (errorElement.classList.contains(activForm.spanFormLittleLines)) {
-    errorElement.classList.remove(activForm.spanFormLittleLines);
-    errorElement.classList.add(activForm.spanForm);
+  errorElement.classList.remove(forms.errorClass);
+  if (errorElement.classList.contains(forms.spanFormLittleLines)) {
+    errorElement.classList.remove(forms.spanFormLittleLines);
+    errorElement.classList.add(forms.spanForm);
   };
 };
 
 /** функция включения или выключения кнопки сохранить в зависимости от валидности или не валидности
 input открытой формы в целом */
-function toggleButtonState (inputList, buttonElement, activForm) {
+function toggleButtonState (inputList, buttonElement, forms) {
   if (hasInvalidInput (inputList)) { 
-  buttonElement.classList.add(activForm.buttonInvalid);
-  buttonElement.classList.remove(activForm.buttonValid);
+  buttonElement.classList.add(forms.buttonInvalid);
+  buttonElement.classList.remove(forms.buttonValid);
   buttonElement.setAttribute('disabled', true);
   } else {
-  buttonElement.classList.remove(activForm.buttonInvalid);
-  buttonElement.classList.add(activForm.buttonValid);
+  buttonElement.classList.remove(forms.buttonInvalid);
+  buttonElement.classList.add(forms.buttonValid);
   buttonElement.removeAttribute('disabled');
   };
 };
 
-/** функция проверки валидности всех input в открытой форме */
+/** функция проверки валидности всех input в формах */
 function hasInvalidInput (inputList) {
   return inputList.some((inputElement) => { 
   return !inputElement.validity.valid;
+  });
+};
+
+/** функция для отладки формы profile при открытии (start)*/
+function makeValidFormAtTheStart (popup) {
+  const buttonPopupProfile = popup.querySelector(forms.button);
+  buttonPopupProfile.classList.remove(forms.buttonInvalid);
+  buttonPopupProfile.classList.add(forms.buttonValid);
+  buttonPopupProfile.removeAttribute('disabled');
+  popup.querySelectorAll(`.${forms.errorClass}`).forEach((element) => {
+    if (element.classList.contains(forms.errorClass)) {
+      element.classList.remove(forms.errorClass);
+    } else if (element.classList.contains(forms.spanFormLittleLines)) {
+      element.classList.remove(forms.spanFormLittleLines);
+    };
+    element.classList.add(forms.spanForm);
+    element.textContent = '';
+  });
+  popup.querySelectorAll(selectors.popupForm).forEach((element) => {
+    if (element.classList.contains(forms.inputInvalid)) {
+      element.classList.remove(forms.inputInvalid);
+      element.classList.add(forms.inputValid);
+    };
   });
 };

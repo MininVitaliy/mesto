@@ -54,16 +54,15 @@ const groupImage = document.querySelector(selectors.popupGroup)
 /** открытие формы */
 function openPopup (popup) {
   popup.classList.add('popup_opened');
-  activForm(popup);
+  /** навешивание обработчика события: закрытие - Esc */
+  document.addEventListener('keydown', closePpupopEsc);
 };
 
 /** закрытие формы */
 function closePopup (popup) {
-  popup.classList.remove('popup_opened');
-  popup.querySelectorAll(selectors.popupForm).forEach((strippingValue) => {
-    strippingValue.value = '';
-  });
-  
+  popup.classList.remove('popup_opened');  
+  /** удаление обработчика события: закрытие - Esc */
+  document.removeEventListener('keydown', closePpupopEsc);
 };
 
 /** сохранения формы профиль */
@@ -102,6 +101,21 @@ function createCard (card) {
   fotoElement.querySelector(selectors.elementTitle).textContent = card.name;
   fotoElement.querySelector(selectors.elementMasckGroup).src = card.link;
   fotoElement.querySelector(selectors.elementMasckGroup).alt = `Фото ${card.name}`;
+   /** изменения сердечка лайк на закрашенный и обратно */
+  fotoElement.querySelector(selectors.elementHeart).addEventListener('click', (evt) => {
+    evt.target.classList.toggle('element__heart_active');
+  });
+  /** удаление картинки места */
+  fotoElement.querySelector(selectors.elementGarbage).addEventListener('click', () => {
+    fotoElement.remove();
+  });
+  /** открытие попапа с картинкой */
+  fotoElement.querySelector(selectors.elementMasckGroup).addEventListener('click', () => {
+    groupTitle.textContent = card.name;
+    groupImage.src = card.link;
+    groupImage.alt = `Фото ${card.name}`;
+    openPopup(popupFoto);
+  });
   return fotoElement;
 };
 
@@ -132,6 +146,7 @@ buttonOpenFormEditing.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupProfile);
+  makeValidFormAtTheStart(popupProfile);
 });
 buttonOpenFormMesto.addEventListener('click', () => openPopup(popupMesto));
 
@@ -139,9 +154,6 @@ buttonOpenFormMesto.addEventListener('click', () => openPopup(popupMesto));
 buttonClosePopupProfile.addEventListener('click', () => closePopup(popupProfile));
 buttonClosePopupMesto.addEventListener('click', () => closePopup(popupMesto));
 buttonClosePopupFoto.addEventListener('click', () => closePopup(popupFoto));
-
-/** закрытие - Esc */
-document.addEventListener('keydown', closePpupopEsc);
 
 /** закрытие при нажатие вне формы (на затемненый экран)*/
 popupProfile.addEventListener('click', closePpupopOverlay);
@@ -151,28 +163,3 @@ popupFoto.addEventListener('click', closePpupopOverlay);
 /** сохранения */
 formProfile.addEventListener('submit', saveFormProfile); 
 formMesto.addEventListener('submit', saveFormMesto);
-
-/** изменения сердечка лайк на закрашенный и обратно - делегирование события  */
-fotoConteinerLists.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__heart')) {
-    evt.target.classList.toggle('element__heart_active');
-  };
-});
-
-/** удаление картинки места - делегирование события  */
-fotoConteinerLists.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__garbage')) {
-    evt.target.parentElement.remove();
-  };
-});
-
-/** открытие попапа с картинкой - делегирование события */
-fotoConteinerLists.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('element__masck-group')) {
-    const classPopup = evt.target.parentElement;
-    groupTitle.textContent = classPopup.querySelector(selectors.elementTitle).textContent;
-    groupImage.src = classPopup.querySelector(selectors.elementMasckGroup).src;
-    groupImage.alt = `Фото ${classPopup.querySelector(selectors.elementTitle).textContent}`;
-    openPopup(popupFoto);
-  }
-});
