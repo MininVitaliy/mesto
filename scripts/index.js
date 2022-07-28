@@ -79,7 +79,10 @@ function saveFormMesto (evt) {
   evt.preventDefault(); 
   /** создаем массив для работы с карточкой, вставляем значения с помощью value в переменые */
   addCard({name: titleInput.value, link: imageInput.value});
+  evt.target.reset();
   closePopup(popupMesto);
+  /** вызов функции по изменению кнопки сохранения на невалидную */
+  makeInvalidButtonAtTheStart(popupMesto);
 };
 
 /** функция для создания 6 первых карточек из масива - cards.js */
@@ -88,19 +91,19 @@ function addInitialCards() {
 };
 addInitialCards();
 
-/** функция добавления картинки */
+/** функция добавления карточки */
 function addCard(card) {
-  const variable = createCard (card);
   /** вставка картинки в начало с помощью функции renderCard */
-  renderCard(variable);
+  renderCard(createCard (card));
 };
 
 /** функция создания карточки */
 function createCard (card) {
   const fotoElement = fotoTemplate.cloneNode(true);
+  const photoOfTheCard = fotoElement.querySelector(selectors.elementMasckGroup);
   fotoElement.querySelector(selectors.elementTitle).textContent = card.name;
-  fotoElement.querySelector(selectors.elementMasckGroup).src = card.link;
-  fotoElement.querySelector(selectors.elementMasckGroup).alt = `Фото ${card.name}`;
+  photoOfTheCard.src = card.link;
+  photoOfTheCard.alt = `Фото ${card.name}`;
    /** изменения сердечка лайк на закрашенный и обратно */
   fotoElement.querySelector(selectors.elementHeart).addEventListener('click', (evt) => {
     evt.target.classList.toggle('element__heart_active');
@@ -110,7 +113,7 @@ function createCard (card) {
     fotoElement.remove();
   });
   /** открытие попапа с картинкой */
-  fotoElement.querySelector(selectors.elementMasckGroup).addEventListener('click', () => {
+  photoOfTheCard.addEventListener('click', () => {
     groupTitle.textContent = card.name;
     groupImage.src = card.link;
     groupImage.alt = `Фото ${card.name}`;
