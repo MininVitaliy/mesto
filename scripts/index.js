@@ -1,3 +1,7 @@
+/** импорт данных из ругих модулей*/
+import Card from './Card.js';
+import {InvalidButtonAtTheStart, ValidFormAtTheStart, params} from './FormValidator.js';
+
 /** упорядочевания классов в selectors */
 const selectors = {
   popupProfile: '.popup_open_profil',
@@ -7,7 +11,6 @@ const selectors = {
   profileEditButton: '.profile__edit-button',
   profileAddButton: '.profile__add-button',
   buttonClosePopup: '.popup__button-close',
-  elementHeart: '.element__heart',
   elementsLists: '.elements__lists',
   formProfile: '.popup__forms-profil',
   formMesto: '.popup__forms-mesto',
@@ -17,15 +20,7 @@ const selectors = {
   popupFormImage: '.popup__form_image',
   profileTitle: '.profile__title',
   profileText: '.profile__text',
-  popupGroupTitle: '.popup__group-title',
-  popupGroup: '.popup__group',
-  fotoTemplate: '.foto-template',
-  element: '.element',
-  elementTitle: '.element__title',
-  elementMasckGroup: '.element__masck-group',
-  elementGarbage: '.element__garbage',
-  popupOpened: '.popup_opened',
-  popupForm: '.popup__form'
+  popupOpened: '.popup_opened'
 };
 
 /** поиск классов */
@@ -37,19 +32,15 @@ const buttonOpenFormEditing = profile.querySelector(selectors.profileEditButton)
 const buttonOpenFormMesto = profile.querySelector(selectors.profileAddButton);
 const buttonClosePopupProfile = popupProfile.querySelector(selectors.buttonClosePopup);
 const buttonClosePopupMesto = popupMesto.querySelector(selectors.buttonClosePopup);
-const buttonClosePopupFoto = popupFoto.querySelector(selectors.buttonClosePopup);
 const fotoConteinerLists = document.querySelector(selectors.elementsLists);
 const formProfile = document.querySelector(selectors.formProfile);
 const formMesto = document.querySelector(selectors.formMesto);
-const fotoTemplate = document.querySelector(selectors.fotoTemplate).content.querySelector(selectors.element);
 const nameInput = document.querySelector(selectors.popupFormNewName);
 const jobInput = document.querySelector(selectors.popupFormNewJob);
 const titleInput = document.querySelector(selectors.popupFormTitle);
 const imageInput = document.querySelector(selectors.popupFormImage);
 const profileName = profile.querySelector(selectors.profileTitle);
 const profileJob = profile.querySelector(selectors.profileText);
-const groupTitle = document.querySelector(selectors.popupGroupTitle);
-const groupImage = document.querySelector(selectors.popupGroup)
 
 /** открытие формы */
 function openPopup (popup) {
@@ -82,44 +73,16 @@ function saveFormMesto (evt) {
   evt.target.reset();
   closePopup(popupMesto);
   /** вызов функции по изменению кнопки сохранения на невалидную */
-  makeInvalidButtonAtTheStart(popupMesto);
+  //makeInvalidButtonAtTheStart(popupMesto);
+  const validMesto = new InvalidButtonAtTheStart (params, popupMesto);
+  validMesto.makeInvalidButtonAtTheStart ();
 };
-
-/** функция для создания 6 первых карточек из масива - cards.js */
-function addInitialCards() {
-  initialCards.forEach(addCard);
-};
-addInitialCards();
 
 /** функция добавления карточки */
-function addCard(card) {
+function addCard(item) {
+  const card = new Card(item, '.foto-template');
   /** вставка картинки в начало с помощью функции renderCard */
-  renderCard(createCard (card));
-};
-
-/** функция создания карточки */
-function createCard (card) {
-  const fotoElement = fotoTemplate.cloneNode(true);
-  const photoOfTheCard = fotoElement.querySelector(selectors.elementMasckGroup);
-  fotoElement.querySelector(selectors.elementTitle).textContent = card.name;
-  photoOfTheCard.src = card.link;
-  photoOfTheCard.alt = `Фото ${card.name}`;
-   /** изменения сердечка лайк на закрашенный и обратно */
-  fotoElement.querySelector(selectors.elementHeart).addEventListener('click', (evt) => {
-    evt.target.classList.toggle('element__heart_active');
-  });
-  /** удаление картинки места */
-  fotoElement.querySelector(selectors.elementGarbage).addEventListener('click', () => {
-    fotoElement.remove();
-  });
-  /** открытие попапа с картинкой */
-  photoOfTheCard.addEventListener('click', () => {
-    groupTitle.textContent = card.name;
-    groupImage.src = card.link;
-    groupImage.alt = `Фото ${card.name}`;
-    openPopup(popupFoto);
-  });
-  return fotoElement;
+  renderCard(card.createCard ());
 };
 
 /** функция добавления карточки в начало */
@@ -130,7 +93,7 @@ function renderCard (card) {
 /** функция действия по несовпадению target и event.currentTarget - Overlay*/
 function closePpupopOverlay  (evt) {
   if (evt.target !== evt.currentTarget) {
-    return
+    return;
   };
   closePopup(evt.target);
 };
@@ -138,7 +101,7 @@ function closePpupopOverlay  (evt) {
 /** функция закрытия попапа при нажатии на Esc*/
 function closePpupopEsc (evt) {
   if (evt.key === 'Escape') {
-  closePopup(document.querySelector(selectors.popupOpened));
+    closePopup(document.querySelector(selectors.popupOpened));
   };
 };
 
@@ -149,14 +112,14 @@ buttonOpenFormEditing.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupProfile);
-  makeValidFormAtTheStart(popupProfile);
+  const validProfile = new ValidFormAtTheStart (params, popupProfile);
+  validProfile.makeValidFormAtTheStart ();
 });
 buttonOpenFormMesto.addEventListener('click', () => openPopup(popupMesto));
 
 /** закрытие */
 buttonClosePopupProfile.addEventListener('click', () => closePopup(popupProfile));
 buttonClosePopupMesto.addEventListener('click', () => closePopup(popupMesto));
-buttonClosePopupFoto.addEventListener('click', () => closePopup(popupFoto));
 
 /** закрытие при нажатие вне формы (на затемненый экран)*/
 popupProfile.addEventListener('click', closePpupopOverlay);
@@ -166,3 +129,6 @@ popupFoto.addEventListener('click', closePpupopOverlay);
 /** сохранения */
 formProfile.addEventListener('submit', saveFormProfile); 
 formMesto.addEventListener('submit', saveFormMesto);
+
+/** экспорт данных из других модулей*/
+export {openPopup, closePopup, renderCard, addCard};
