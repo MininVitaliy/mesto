@@ -1,6 +1,6 @@
 /** импорт данных из ругих модулей*/
 import Card from './Card.js';
-import {InvalidButtonAtTheStart, ValidFormAtTheStart, params} from './FormValidator.js';
+import {makeValidFormAtTheStart, makeInvalidButtonAtTheStart} from './FormValidator.js';
 
 /** упорядочевания классов в selectors */
 const selectors = {
@@ -20,7 +20,9 @@ const selectors = {
   popupFormImage: '.popup__form_image',
   profileTitle: '.profile__title',
   profileText: '.profile__text',
-  popupOpened: '.popup_opened'
+  popupOpened: '.popup_opened',
+  popupGroupTitle: '.popup__group-title',
+  popupGroup: '.popup__group'
 };
 
 /** поиск классов */
@@ -32,6 +34,7 @@ const buttonOpenFormEditing = profile.querySelector(selectors.profileEditButton)
 const buttonOpenFormMesto = profile.querySelector(selectors.profileAddButton);
 const buttonClosePopupProfile = popupProfile.querySelector(selectors.buttonClosePopup);
 const buttonClosePopupMesto = popupMesto.querySelector(selectors.buttonClosePopup);
+const buttonClosePopupFoto = popupFoto.querySelector(selectors.buttonClosePopup);
 const fotoConteinerLists = document.querySelector(selectors.elementsLists);
 const formProfile = document.querySelector(selectors.formProfile);
 const formMesto = document.querySelector(selectors.formMesto);
@@ -41,6 +44,8 @@ const titleInput = document.querySelector(selectors.popupFormTitle);
 const imageInput = document.querySelector(selectors.popupFormImage);
 const profileName = profile.querySelector(selectors.profileTitle);
 const profileJob = profile.querySelector(selectors.profileText);
+const groupTitle = document.querySelector(selectors.popupGroupTitle);
+const groupImage = document.querySelector(selectors.popupGroup);
 
 /** открытие формы */
 function openPopup (popup) {
@@ -57,7 +62,7 @@ function closePopup (popup) {
 };
 
 /** сохранения формы профиль */
-function saveFormProfile (evt) {
+function handleSaveFormProfile (evt) {
   evt.preventDefault(); 
   /**Вставьте новые значения с помощью textConten*/
   profileName.textContent = nameInput.value;
@@ -66,23 +71,30 @@ function saveFormProfile (evt) {
 };
 
 /** сохранения формы новое место */
-function saveFormMesto (evt) {
+function handleSaveFormMesto (evt) {
   evt.preventDefault(); 
   /** создаем массив для работы с карточкой, вставляем значения с помощью value в переменые */
-  addCard({name: titleInput.value, link: imageInput.value});
+  //addCard({name: titleInput.value, link: imageInput.value});
+  renderCard(createCard({name: titleInput.value, link: imageInput.value}));
   evt.target.reset();
   closePopup(popupMesto);
   /** вызов функции по изменению кнопки сохранения на невалидную */
-  //makeInvalidButtonAtTheStart(popupMesto);
-  const validMesto = new InvalidButtonAtTheStart (params, popupMesto);
-  validMesto.makeInvalidButtonAtTheStart ();
+  makeInvalidButtonAtTheStart (popupMesto);
 };
 
-/** функция добавления карточки */
-function addCard(item) {
-  const card = new Card(item, '.foto-template');
-  /** вставка картинки в начало с помощью функции renderCard */
-  renderCard(card.createCard ());
+/** функция открытия попапа с картинокй и наменованием карточки */
+function handleOpenCardPopup (name, link) {
+  groupTitle.textContent = name;
+  groupImage.src = link;
+  groupImage.alt = `Фото ${name}`;
+  openPopup(popupFoto);
+};
+
+/** функция создания карточки */
+function createCard(item) {
+  const card = new Card(item, '.foto-template', handleOpenCardPopup);
+  const cardElement = card.createCard ();
+  return cardElement
 };
 
 /** функция добавления карточки в начало */
@@ -112,14 +124,15 @@ buttonOpenFormEditing.addEventListener('click', () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   openPopup(popupProfile);
-  const validProfile = new ValidFormAtTheStart (params, popupProfile);
-  validProfile.makeValidFormAtTheStart ();
+  /** вызов функции по изменению кнопки сохранения на валидную и отлатка input */
+  makeValidFormAtTheStart (popupProfile);
 });
 buttonOpenFormMesto.addEventListener('click', () => openPopup(popupMesto));
 
 /** закрытие */
 buttonClosePopupProfile.addEventListener('click', () => closePopup(popupProfile));
 buttonClosePopupMesto.addEventListener('click', () => closePopup(popupMesto));
+buttonClosePopupFoto.addEventListener('click', () => closePopup(popupFoto));
 
 /** закрытие при нажатие вне формы (на затемненый экран)*/
 popupProfile.addEventListener('click', closePpupopOverlay);
@@ -127,8 +140,8 @@ popupMesto.addEventListener('click', closePpupopOverlay);
 popupFoto.addEventListener('click', closePpupopOverlay);
 
 /** сохранения */
-formProfile.addEventListener('submit', saveFormProfile); 
-formMesto.addEventListener('submit', saveFormMesto);
+formProfile.addEventListener('submit', handleSaveFormProfile); 
+formMesto.addEventListener('submit', handleSaveFormMesto);
 
 /** экспорт данных из других модулей*/
-export {openPopup, closePopup, renderCard, addCard};
+export {renderCard, createCard, handleOpenCardPopup};
