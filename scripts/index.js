@@ -1,6 +1,7 @@
 /** импорт данных из ругих модулей*/
 import Card from './Card.js';
-import {makeValidFormAtTheStart, makeInvalidButtonAtTheStart} from './FormValidator.js';
+import {makeValidFormAtTheStart, makeInvalidButtonAtTheStart, FormValidator} from './FormValidator.js';
+import {initialCards, params} from './utils.js';
 
 /** упорядочевания классов в selectors */
 const selectors = {
@@ -46,6 +47,7 @@ const profileName = profile.querySelector(selectors.profileTitle);
 const profileJob = profile.querySelector(selectors.profileText);
 const groupTitle = document.querySelector(selectors.popupGroupTitle);
 const groupImage = document.querySelector(selectors.popupGroup);
+const formList = Array.from(document.querySelectorAll(params.form));
 
 /** открытие формы */
 function openPopup (popup) {
@@ -90,6 +92,12 @@ function handleOpenCardPopup (name, link) {
   openPopup(popupFoto);
 };
 
+/** добавление 6 первых карточек*/
+initialCards.forEach((item) => {
+  const card = createCard(item);
+  renderCard(card);
+});
+
 /** функция создания карточки */
 function createCard(item) {
   const card = new Card(item, '.foto-template', handleOpenCardPopup);
@@ -101,6 +109,12 @@ function createCard(item) {
 function renderCard (card) {
   fotoConteinerLists.prepend(card);
 };
+
+/** добавление 2-х карточек из класса для валидации 2 форм */
+formList.forEach((formElement) => {
+  const card = new FormValidator (params, formElement);
+  card.enableValidation ();
+});
 
 /** функция действия по несовпадению target и event.currentTarget - Overlay*/
 function closePpupopOverlay  (evt) {
@@ -144,4 +158,4 @@ formProfile.addEventListener('submit', handleSaveFormProfile);
 formMesto.addEventListener('submit', handleSaveFormMesto);
 
 /** экспорт данных из других модулей*/
-export {renderCard, createCard, handleOpenCardPopup};
+export {handleOpenCardPopup};

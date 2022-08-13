@@ -1,6 +1,5 @@
 /** импорт данных из других модулей*/
-import {renderCard, createCard} from './index.js';
-import {initialCards, selectorsCard} from './utils.js';
+import {selectorsCard} from './utils.js';
 
 class Card {
   /** конструктор - прием масива и селектора-template */
@@ -55,9 +54,3 @@ class Card {
 
 /** экспорт данных в другие модули*/
 export default Card;
-
-/** добавление 6 первых карточек*/
-initialCards.forEach((item) => {
-  const card = createCard(item);
-  renderCard(card);
-});

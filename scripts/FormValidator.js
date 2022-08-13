@@ -95,12 +95,6 @@ class FormValidator {
   };
 };
 
-const formList = Array.from(document.querySelectorAll(params.form));
-formList.forEach((formElement) => {
-  const card = new FormValidator (params, formElement);
-  card.enableValidation ();
-});
-
 /** функция для отладки формы profile при открытии (start) - вопрос ВАЛИДАЦИИ*/
 function makeValidFormAtTheStart (popup) {
   const buttonPopup = popup.querySelector(params.button);
@@ -132,4 +126,4 @@ function makeInvalidButtonAtTheStart (popup) {
   buttonPopup.setAttribute('disabled', true);
 };
 
-export {makeValidFormAtTheStart, makeInvalidButtonAtTheStart};
+export {makeValidFormAtTheStart, makeInvalidButtonAtTheStart, FormValidator};
