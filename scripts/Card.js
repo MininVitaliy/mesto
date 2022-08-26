@@ -3,11 +3,11 @@ import {selectorsCard} from './utils.js';
 
 class Card {
   /** конструктор - прием масива и селектора-template */
-  constructor(card, templateSelector, handleOpenCardPopup) {  
+  constructor(card, templateSelector, handleCardClick) {  
     this._name = card.name;
     this._link = card.link;
     this._templateSelector = templateSelector;
-    this._handleOpenCardPopup = handleOpenCardPopup; 
+    this._handleOpenCardPopup = handleCardClick; 
   };
   
   /** поиск и клонирования template элемента*/
@@ -26,7 +26,6 @@ class Card {
     this._changeTheHeartLike ();
     this._deleteImageLocation ();
     this._openСardPopup ();
-    //this._closeСardPopup ();
     return this._fotoElement;
   };
 

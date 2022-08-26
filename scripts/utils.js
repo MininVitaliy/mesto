@@ -36,7 +36,13 @@ const selectorsCard = {
   elementGarbage: '.element__garbage',
   popupGroupTitle: '.popup__group-title',
   popupGroup: '.popup__group',
-  popupFoto:'.popup_image'
+  popupFoto:'.popup_image',
+  popupForm: '.popup__form',
+  popupForms: '.popup__forms',
+  popupOpened:'popup_opened',
+  popupButtonClose:'.popup__button-close',
+  popupMesto: 'popup_open_mesto',
+  popupProfile: 'popup_open_profil'
 };
 
 /** упорядочевания классов в params */
@@ -54,5 +60,22 @@ const params = {
   popupForm: '.popup__form'
 };
 
+/** упорядочевания классов в selectors */
+const selectors = {
+  popupProfile: '.popup_open_profil',
+  popupMesto: '.popup_open_mesto',
+  elementsLists: '.elements__lists',
+  popupFormNewName: '.popup__form_new_name',
+  popupFormNewJob: '.popup__form_new_job',
+  profileEditButton: '.profile__edit-button',
+  profileAddButton: '.profile__add-button',
+  popupFotoNoPoint:'popup_image',
+  fotoTemplate: '.foto-template',
+  popupMesto: '.popup_open_mesto',
+  popupProfile: '.popup_open_profil',
+  profileTitle: '.profile__title',
+  profileText: '.profile__text'
+};
+
 /** экспорт данных в другие модули*/
-export {initialCards, selectorsCard, params};
+export {initialCards, selectorsCard, params, selectors};
