@@ -1,11 +1,11 @@
 /** импорт данных из ругих модулей*/
-import Card from './Card.js';
-import {makeValidFormAtTheStart, makeInvalidButtonAtTheStart, FormValidator} from './FormValidator.js';
-import {initialCards, params, selectorsCard, selectors} from './utils.js';
-import Section from './Section.js';
-import PopupWithImage  from './PicturePopup.js';
-import PopupWithForm  from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+import Card from '../components/Card.js';
+import {makeValidFormAtTheStart, makeInvalidButtonAtTheStart, FormValidator} from '../components/FormValidator.js';
+import {initialCards, params, selectorsCard, selectors} from '../components/utils.js';
+import Section from '../components/Section.js';
+import PopupWithImage  from '../components/PicturePopup.js';
+import PopupWithForm  from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
 /** поиск классов */
 const popupProfile = document.querySelector(selectors.popupProfile);
