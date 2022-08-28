@@ -6,6 +6,7 @@ import Section from '../components/Section.js';
 import PopupWithImage  from '../components/PicturePopup.js';
 import PopupWithForm  from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import './index.css';
 
 /** поиск классов */
 const popupProfile = document.querySelector(selectors.popupProfile);

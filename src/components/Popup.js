@@ -4,13 +4,15 @@ export default class Popup {
   constructor (popupSelector) {
   this.popupSelector = document.querySelector(`.${popupSelector}`)
   this._active = selectorsCard.popupOpened;
+  this._handleEscClose = this._handleEscClose.bind(this);
+  this._closePpupopOverlay = this._closePpupopOverlay.bind(this);
   };
   
   /** метод открытия попапа и навешивания обработчика событий для закрытия попапа на ESC */
   open () {
     this.popupSelector.classList.add(`${this._active}`);
     /** навешивание обработчика события: закрытие - Esc */
-    document.addEventListener('keydown', this._handleEscClose.bind(this)); 
+    document.addEventListener('keydown', this._handleEscClose); 
   };
 
   /** метод закрытия попапа и снятия обработчика событий для закрытия попапа на ESC */
@@ -41,6 +43,6 @@ export default class Popup {
     this._popupCloseButton.addEventListener('click', () => {
       this.close();
     });
-    this.popupSelector.addEventListener('click', this._closePpupopOverlay.bind(this));
+    this.popupSelector.addEventListener('click', this._closePpupopOverlay);
   };
 };

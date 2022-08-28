@@ -4,27 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages /index.css">
   <title>Спринт№8 "Место - JavaScript" ООП</title>
-  <script type="module" src="./components/Section.js"></script>
-  <script type="module" src="./components/utils.js"></script>
-  <script type="module" src="./components/Popup.js"></script>
-  <script type="module" src="./components/Card.js"></script>
-  <script type="module" src="./components/PicturePopup.js"></script>
-  <script type="module" src="./components/PopupWithForm.js"></script>
-  <script type="module" src="./components/UserInfo.js"></script>
-  <script type="module" src="./pages /index.js"></script>
-  <script type="module" src="./components/FormValidator.js"></script>
 </head>
 <body class="root">
   <header class="header root__header">
-    <img src="./images/logo-mesto.svg" class="header__logo" alt="Логотип Место">
+    <img src="<%=require('./images/logo-mesto.svg')%>" class="header__logo" alt="Логотип Место">
   </header>
 
   <main class="content">
     <section class="profile content__profile">
       <div class="profile__row">
-        <img src="./images/image.png" class="profile__avatar" alt="Фото персонажа">
+        <img src="<%=require('./images/image.png')%>" class="profile__avatar" alt="Фото персонажа">
         <div class="profile__grid">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <button type="button" aria-label="Корректировка информации о персонаже" class="profile__edit-button"></button>
