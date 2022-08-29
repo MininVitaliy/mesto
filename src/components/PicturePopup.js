@@ -1,21 +1,20 @@
 import Popup from './Popup.js';
-import {selectorsCard} from './utils.js';
 
 export default class PopupWithImage extends Popup {
-  constructor (name, link, popupSelector) {
-    super(popupSelector);
-    this._popupSelector = document.querySelector(`.${popupSelector}`)
-    this._name = name;
-    this._link = link;
+  constructor (popupSelector, item) {
+    super(popupSelector, item);
+    this._popupElement = document.querySelector(`.${popupSelector}`);
+    this._popupSelectorName = this._popupElement.querySelector(item.popupGroupTitle);
+    this._popupSelectorImage = this._popupElement.querySelector(item.popupGroup);
   };
 
   /** метод открытия попапа с картинокй и наменованием карточки */
-  open() {
+  open(name, link) {
     super.open();
-    super.setEventListeners ();
-    this._popupSelector.querySelector(selectorsCard.popupGroupTitle).textContent = this._name;
-    this._image = this._popupSelector.querySelector(selectorsCard.popupGroup);
-    this._image.src = this._link;
-    this._image.alt = `Фото ${this._name}`;
+    super.setEventListeners (); 
+    this._popupSelectorName .textContent = name;
+    this._image = this._popupSelectorImage;
+    this._image.src = link;
+    this._image.alt =`Фото ${name}`;
   }
 };

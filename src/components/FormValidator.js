@@ -1,6 +1,4 @@
-import {params} from './utils.js';
-
-class FormValidator {
+export default class FormValidator {
   constructor(item, formElement) {      
     this._form = item.form;
     this._button = item.button;
@@ -13,6 +11,7 @@ class FormValidator {
     this._spanForm = item.spanForm;
     this._errorClass = item.errorClass;
     this._formElement = formElement;
+    this._popupForm = item.popupForm;
   };
 
   /** запуск валидации форм */
@@ -93,37 +92,35 @@ class FormValidator {
     return !inputElement.validity.valid;
     });
   };
-};
+  
+  /** функция для отладки формы profile при открытии (start) */
+  makeValidFormAtTheStart () {
+    this._buttonPopup = this._formElement.querySelector(this._button);
+    this._buttonPopup.classList.remove(this._buttonInvalid);
+    this._buttonPopup.classList.add(this._buttonValid);
+    this._buttonPopup.removeAttribute('disabled');
+    this._formElement.querySelectorAll(`.${this._errorClass}`).forEach((element) => {
+      if (element.classList.contains(this._errorClass)) {
+        element.classList.remove(this._errorClass);
+      } else if (element.classList.contains(this._spanFormLittleLines)) {
+        element.classList.remove(this._spanFormLittleLines);
+      };
+      element.classList.add(this._spanForm);
+      element.textContent = '';
+    });
+    this._formElement.querySelectorAll(this._popupForm).forEach((element) => {
+      if (element.classList.contains(this._inputInvalid)) {
+        element.classList.remove(this._inputInvalid);
+        element.classList.add(this._inputValid);
+      };
+    });
+  };
 
-/** функция для отладки формы profile при открытии (start) - вопрос ВАЛИДАЦИИ*/
-function makeValidFormAtTheStart (popup) {
-  const buttonPopup = popup.querySelector(params.button);
-  buttonPopup.classList.remove(params.buttonInvalid);
-  buttonPopup.classList.add(params.buttonValid);
-  buttonPopup.removeAttribute('disabled');
-  popup.querySelectorAll(`.${params.errorClass}`).forEach((element) => {
-    if (element.classList.contains(params.errorClass)) {
-      element.classList.remove(params.errorClass);
-    } else if (element.classList.contains(params.spanFormLittleLines)) {
-      element.classList.remove(params.spanFormLittleLines);
-    };
-    element.classList.add(params.spanForm);
-    element.textContent = '';
-  });
-  popup.querySelectorAll(params.popupForm).forEach((element) => {
-    if (element.classList.contains(params.inputInvalid)) {
-      element.classList.remove(params.inputInvalid);
-      element.classList.add(params.inputValid);
-    };
-  });
+  /** функция для отладки формы mesto при сохранении и повторном открытии (start) */
+  makeInvalidButtonAtTheStart () {
+    this._buttonPopup = this._formElement.querySelector(this._button);
+    this._buttonPopup.classList.add(this._buttonInvalid);
+    this._buttonPopup.classList.remove(this._buttonValid);
+    this._buttonPopup.setAttribute('disabled', true);
+  };
 };
-
-/** функция для отладки формы mesto при сохранении и повторном открытии (start) - вопрос ВАЛИДАЦИИ*/
-function makeInvalidButtonAtTheStart (popup) {
-  const buttonPopup = popup.querySelector(params.button);
-  buttonPopup.classList.add(params.buttonInvalid);
-  buttonPopup.classList.remove(params.buttonValid);
-  buttonPopup.setAttribute('disabled', true);
-};
-
-export {makeValidFormAtTheStart, makeInvalidButtonAtTheStart, FormValidator};

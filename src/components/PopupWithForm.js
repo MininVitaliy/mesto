@@ -1,19 +1,19 @@
 import Popup from './Popup.js';
-import {selectorsCard} from './utils.js';
 
 export default  class PopupWithForm extends Popup {
-  constructor ({popupSelector, sabmitForm}) {
-    super(popupSelector);
-    this._popupSelector = document.querySelector(`.${popupSelector}`);
+  constructor ({popupSelector, sabmitForm, selector}) {
+    super(popupSelector, selector);
+    this._popupForm = selector.popupForm;
+    this._popupForms = selector.popupForms;
     this._sabmitForm = sabmitForm;
+    this._inputList = this._popupElement.querySelectorAll(this._popupForm);
   };
 
   /** приватный метод поиска всех input и извлечения данных из них*/
   _getInputValues () {
     this._formValues = {};
-    this._inputList = this._popupSelector.querySelectorAll(selectorsCard.popupForm);
     for (var i = 0; i < this._inputList.length; ++i) {
-      this._formValues[i] = this._inputList[i].value;
+      this._formValues[this._inputList[i].name] = this._inputList[i].value;
     };
     return this._formValues;
   };
@@ -21,17 +21,17 @@ export default  class PopupWithForm extends Popup {
   /** навешивания обработчика событий submit*/
   setEventListeners () {
     super.setEventListeners ();
-    this._form = this._popupSelector.querySelector(selectorsCard.popupForms);
+    this._form = this._popupElement.querySelector(this._popupForms);
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._sabmitForm({name: this._getInputValues ()[0], link: this._getInputValues ()[1]})
+      this._sabmitForm(this._getInputValues ())
       this._close ();
-      this._form.reset();
+      super.close();
     })
   }; 
   
   /** метод закрытия попапа - перезаписаный */
   _close () {
-    super.close();    
+    this._form.reset();
   }
 };

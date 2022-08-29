@@ -1,7 +1,7 @@
 export default class UserInfo {
-  constructor ({selectorName, selectorJob}) {
-    this._selectorName =  document.querySelector(selectorName);
-    this._selectorJob = document.querySelector(selectorJob);
+  constructor ({className, classJob}) {
+    this._selectorName =  document.querySelector(className);
+    this._selectorJob = document.querySelector(classJob);
   };
   /** метод предачи данных со страницы в форму */
   getUserInfo () {

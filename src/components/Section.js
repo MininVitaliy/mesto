@@ -1,8 +1,8 @@
 export default class Section {
-  constructor ({items, renderer}, containerSelector) {
+  constructor ({items, renderer}, classElement) {
     this._initialArray = items;
     this._renderer = renderer;
-    this._container = containerSelector;
+    this._container = classElement;
   };
 
   /** метод создания первых 6 карточек из масива*/
