@@ -12,6 +12,8 @@ export default class FormValidator {
     this._errorClass = item.errorClass;
     this._formElement = formElement;
     this._popupForm = item.popupForm;
+    this._buttonElement = this._formElement.querySelector(this._button);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputElementForm));
   };
 
   /** запуск валидации форм */
@@ -21,8 +23,6 @@ export default class FormValidator {
 
   /** функция поиска input и button для проверки на валидность*/
   _setEventListeners () {
-    this._buttonElement = this._formElement.querySelector(this._button);
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputElementForm));
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
       inputElement.addEventListener('input', () => {  
@@ -95,32 +95,13 @@ export default class FormValidator {
   
   /** функция для отладки формы profile при открытии (start) */
   makeValidFormAtTheStart () {
-    this._buttonPopup = this._formElement.querySelector(this._button);
-    this._buttonPopup.classList.remove(this._buttonInvalid);
-    this._buttonPopup.classList.add(this._buttonValid);
-    this._buttonPopup.removeAttribute('disabled');
-    this._formElement.querySelectorAll(`.${this._errorClass}`).forEach((element) => {
-      if (element.classList.contains(this._errorClass)) {
-        element.classList.remove(this._errorClass);
-      } else if (element.classList.contains(this._spanFormLittleLines)) {
-        element.classList.remove(this._spanFormLittleLines);
-      };
-      element.classList.add(this._spanForm);
-      element.textContent = '';
-    });
-    this._formElement.querySelectorAll(this._popupForm).forEach((element) => {
-      if (element.classList.contains(this._inputInvalid)) {
-        element.classList.remove(this._inputInvalid);
-        element.classList.add(this._inputValid);
-      };
-    });
+    this._setEventListeners ();
   };
 
   /** функция для отладки формы mesto при сохранении и повторном открытии (start) */
   makeInvalidButtonAtTheStart () {
-    this._buttonPopup = this._formElement.querySelector(this._button);
-    this._buttonPopup.classList.add(this._buttonInvalid);
-    this._buttonPopup.classList.remove(this._buttonValid);
-    this._buttonPopup.setAttribute('disabled', true);
+    this._buttonElement.classList.add(this._buttonInvalid);
+    this._buttonElement.classList.remove(this._buttonValid);
+    this._buttonElement.setAttribute('disabled', true);
   };
 };

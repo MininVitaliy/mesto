@@ -5,6 +5,7 @@ export default class Popup {
     this._popupButtonCloseElement = item.popupButtonClose;
     this._handleEscClose = this._handleEscClose.bind(this);
     this._closePpupopOverlay = this._closePpupopOverlay.bind(this);
+    this._popupCloseButton = this._popupElement.querySelector(this._popupButtonCloseElement);
   };
   
   /** метод открытия попапа и навешивания обработчика событий для закрытия попапа на ESC */
@@ -38,7 +39,6 @@ export default class Popup {
 
   /** навешивания обработчиков событий для закрытия на крестик и при нажатии на затемненую область*/
   setEventListeners () {
-    this._popupCloseButton = this._popupElement.querySelector(this._popupButtonCloseElement);
     this._popupCloseButton.addEventListener('click', () => {
       this.close();
     });

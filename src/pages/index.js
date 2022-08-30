@@ -24,11 +24,14 @@ import './index.css';
 function generateClassCard (item) {
   const card = new Card(item, selectors.fotoTemplate, 
     (name, link) => {
-    const popupWithImage = new PopupWithImage (selectors.popupFotoNoPoint, selectorsCard);
     popupWithImage.open(name, link);
   }, selectorsCard);
  return card.createCard ();
-}
+};
+
+/** создание класса PopupWithImage для модального окна картинки */
+const popupWithImage = new PopupWithImage (selectors.popupFotoNoPoint, selectorsCard);
+popupWithImage.setEventListeners ();
 
 /** добавление карточки Section для инициализациии 6 карточек из массива, 
 добавления открытия и закрытия попапа Image, навешивания обработчиков событий*/

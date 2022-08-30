@@ -7,6 +7,7 @@ export default  class PopupWithForm extends Popup {
     this._popupForms = selector.popupForms;
     this._sabmitForm = sabmitForm;
     this._inputList = this._popupElement.querySelectorAll(this._popupForm);
+    this._form = this._popupElement.querySelector(this._popupForms);
   };
 
   /** приватный метод поиска всех input и извлечения данных из них*/
@@ -21,17 +22,16 @@ export default  class PopupWithForm extends Popup {
   /** навешивания обработчика событий submit*/
   setEventListeners () {
     super.setEventListeners ();
-    this._form = this._popupElement.querySelector(this._popupForms);
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._sabmitForm(this._getInputValues ())
       this._close ();
-      super.close();
     })
   }; 
   
   /** метод закрытия попапа - перезаписаный */
   _close () {
     this._form.reset();
+    super.close();
   }
 };
