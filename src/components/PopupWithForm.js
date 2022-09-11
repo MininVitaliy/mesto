@@ -1,13 +1,14 @@
 import Popup from './Popup.js';
 
 export default  class PopupWithForm extends Popup {
-  constructor ({popupSelector, sabmitForm, selector}) {
+  constructor ({popupSelector, sabmitForm, selector, api}) {
     super(popupSelector, selector);
     this._popupForm = selector.popupForm;
     this._popupForms = selector.popupForms;
     this._sabmitForm = sabmitForm;
     this._inputList = this._popupElement.querySelectorAll(this._popupForm);
     this._form = this._popupElement.querySelector(this._popupForms);
+    this._api= api;
   };
 
   /** приватный метод поиска всех input и извлечения данных из них*/
@@ -25,13 +26,10 @@ export default  class PopupWithForm extends Popup {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._sabmitForm(this._getInputValues ())
-      this._close ();
     })
   }; 
-  
-  /** метод закрытия попапа - перезаписаный */
-  _close () {
+
+  resetForm () {
     this._form.reset();
-    super.close();
-  }
+  };
 };

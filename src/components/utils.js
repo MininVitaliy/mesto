@@ -14,7 +14,10 @@ const selectorsCard = {
   popupOpened:'popup_opened',
   popupButtonClose:'.popup__button-close',
   popupMesto: 'popup_open_mesto',
-  popupProfile: 'popup_open_profil'
+  popupProfile: 'popup_open_profil',
+  popupAvatar: 'popup_open_avatar',
+  popupDelete: 'popup_delete',
+  button: '.popup__button-save'
 };
 
 /** упорядочевания классов в params */
@@ -36,25 +39,33 @@ const params = {
 const selectors = {
   popupProfile: '.popup_open_profil',
   popupMesto: '.popup_open_mesto',
+  popupAvatar: '.popup_open_avatar',
   elementsLists: '.elements__lists',
   popupFormNewName: '.popup__form_new_name',
   popupFormNewJob: '.popup__form_new_job',
   profileEditButton: '.profile__edit-button',
   profileAddButton: '.profile__add-button',
+  profileAvatarButton: '.profile__avatar',
   popupFotoNoPoint:'popup_image',
   fotoTemplate: '.foto-template',
   profileTitle: '.profile__title',
-  profileText: '.profile__text'
+  profileText: '.profile__text',
+  popupDelete: '.popup_delete'
 };
 
 /** поиск классов */
 export const popupProfile = document.querySelector(selectors.popupProfile);
 export const popupMesto = document.querySelector(selectors.popupMesto);
+export const popupAvatar = document.querySelector(selectors.popupAvatar);
 export const profileAddButton = document.querySelector(selectors.profileAddButton);
 export const profileEditButton = document.querySelector(selectors.profileEditButton);
+export const profileAddButtonAvatar = document.querySelector(selectors.profileAvatarButton);
 export const fotoConteinerLists = document.querySelector(selectors.elementsLists);
 export const nameInput = document.querySelector(selectors.popupFormNewName);
 export const jobInput = document.querySelector(selectors.popupFormNewJob);
+export const nameAvatar = document.querySelector(selectors.profileTitle);
+export const jobAvatar = document.querySelector(selectors.profileText);
+export const popupDelete = document.querySelector(selectors.popupDelete);
 
 /** экспорт данных в другие модули*/
 export {selectorsCard, params, selectors};

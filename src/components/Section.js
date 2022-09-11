@@ -1,13 +1,12 @@
 export default class Section {
-  constructor ({items, renderer}, classElement) {
-    this._initialArray = items;
+  constructor ({renderer}, classElement) {
     this._renderer = renderer;
     this._container = classElement;
   };
 
   /** метод создания первых 6 карточек из масива*/
-  renderItems() {
-    this._initialArray.forEach(item => {
+  renderItems(items) {
+    items.forEach(item => {
      this._renderer(item);
     });
   };

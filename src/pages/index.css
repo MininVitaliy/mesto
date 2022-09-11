@@ -72,3 +72,6 @@
 @import url(../blocks/popup/__error/popup__error.css);
 @import url(../blocks/popup/__error/_little-lines/popup__error_little-lines.css);
 @import url(../blocks/popup/__span/popup__span.css);
+
+@import url(../blocks/element/__likes/element__likes.css);
+@import url(../blocks/popup/__title/_delete/popup__title_delete.css);
