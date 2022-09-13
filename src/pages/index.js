@@ -28,17 +28,33 @@ import Api from '../components/Api.js';
 
 /** создание класса Card для карточек */
 function generateClassCard (item, api) {
-  const card = new Card(
-    item,
-    selectors.fotoTemplate, 
-    (name, link) => {
+  const card = new Card({
+    card: item,
+    templateSelector: selectors.fotoTemplate, 
+    handleCardClick: (name, link) => {
       popupWithImage.open(name, link);
     },
-    selectorsCard,
-    api,
-    myServerNumber,
-    popupWithConfirmation
-  );
+    item: selectorsCard,
+    api: api,
+    idUser: myServerNumber,
+    popupWithConfirmation: popupWithConfirmation,
+    deleteLike: (itemId, fotoElementLikes, fotoElementHeart, elementHeartActive) => {
+      api.deleteLike (itemId) 
+        .then((res)=> {
+          fotoElementLikes.textContent = res.likes.length
+        })
+        .then(() => fotoElementHeart.classList.remove(elementHeartActive))
+        .catch(err => console.log(err))
+    },
+    addLike: (itemId, fotoElementLikes, fotoElementHeart , elementHeartActive) => {
+      api.addLike (itemId) 
+        .then((res)=> {
+          fotoElementLikes.textContent = res.likes.length
+        })
+        .then(() => fotoElementHeart.classList.add(elementHeartActive))
+        .catch(err => console.log(err))
+    }
+  });
   return card.createCard ();
 };
 
@@ -47,7 +63,7 @@ const section = new Section ({
   renderer: (item) => {
     if (item.owner._id !== myServerNumber) {
       const cardNoElementGarbage = generateClassCard (item, api);
-      cardNoElementGarbage.querySelector('.element__garbage').remove();
+      cardNoElementGarbage.querySelector(selectorsCard.elementGarbage).remove();
       section.addItem (cardNoElementGarbage);
     } else {
       section.addItem (generateClassCard (item, api));
@@ -70,8 +86,6 @@ const popupFormMesto = new PopupWithForm ({
       .catch(err => console.log(err))
       .finally(() => {
         renderLoading(false, popupMesto, popupFormMesto, 'Сохранение');
-        popupFormMesto.resetForm ();
-        validatorCardMesto.makeInvalidButtonAtTheStart ();
     });
   },
   selector: selectorsCard
@@ -108,7 +122,6 @@ const popupFormProfile = new PopupWithForm ({
      .catch(err => console.log(err))
      .finally(() => {
       renderLoading(false, popupProfile, popupFormProfile, 'Сохранение');
-      popupFormProfile.resetForm (); 
     });
   },
   selector: selectorsCard
@@ -125,8 +138,6 @@ const popupFormAvatar = new PopupWithForm ({
     .catch(err => console.log(err))
     .finally(() => {
       renderLoading(false, popupAvatar, popupFormAvatar, 'Сохранение');
-      popupFormAvatar.resetForm ();
-      validatorAvatar.makeInvalidButtonAtTheStart ();
     });
   },
   selector: selectorsCard
@@ -136,6 +147,7 @@ const popupFormAvatar = new PopupWithForm ({
 popupFormMesto.setEventListeners ();
 profileAddButton.addEventListener('click', () =>{ 
   popupFormMesto.open ();
+  validatorCardMesto.resetValidation();
 });
 
 /** реакция на действия пользователя открытие попапа - Profile*/
@@ -144,7 +156,7 @@ profileEditButton.addEventListener('click', () =>{
   const {name, job} = userInfo.getUserInfo();
   nameInput.value = name;
   jobInput.value = job;
-  validatorCardProfile.makeValidFormAtTheStart();
+  validatorCardProfile.resetValidation(); 
   popupFormProfile.open ();
 });
 
@@ -152,6 +164,7 @@ profileEditButton.addEventListener('click', () =>{
 popupFormAvatar.setEventListeners ();
 profileAddButtonAvatar.addEventListener('click', () =>{ 
   popupFormAvatar.open ();
+  validatorAvatar.resetValidation();
 });
 
 /** добавление карточки UserInfo*/
@@ -187,32 +200,28 @@ const api = new Api({
 }); 
 
 /** добавление карточки Section для инициализациии карточек из массива, 
-добавления открытия и закрытия попапа Image, навешивания обработчиков событий*/
-api.getInitialCards()
-  .then((result) => {
-    section.renderItems(result);
+добавления открытия и закрытия попапа Image, навешивания обработчиков событий и
+добавление информации об User*/
+let myServerNumber;
+Promise.all([api.getInitialCards(), api.getInitialUserMe ()])
+  .then(([infoCard, infoUserMe]) => {
+    userInfo.initialUser (infoUserMe);
+    myServerNumber = infoUserMe._id;
+    return infoCard;
+  })
+  .then ((infoCard) => {
+    section.renderItems(infoCard);
   })
   .catch(err => console.log(err)
 );
 
-/** добавление информации об User*/
-let myServerNumber;
-api.getInitialUserMe ()
-  .then((result) => {
-    userInfo.initialUser (result);
-    myServerNumber = result._id;
-  })
-  .catch(err => 
-    console.log(err)
-);
-
 /* функция измения кнопки sabmit на ативную при нажатии и обратно */
 function renderLoading (isLoading, selectorPopup, selectorForm, infoText) {
+  const loadButton = selectorPopup.querySelector('.popup__button-save');
   if (isLoading) {
-    selectorPopup.querySelector('.popup__button-save').textContent = 'Сохранение...';
+    loadButton.textContent = 'Сохранение...';
   } else {
-    selectorPopup.querySelector('.popup__button-save').textContent = `${infoText}`;
+    loadButton.textContent = `${infoText}`;
     selectorForm.close ();
   }
-}
-
+};

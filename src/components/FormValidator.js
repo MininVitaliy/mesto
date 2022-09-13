@@ -93,15 +93,11 @@ export default class FormValidator {
     });
   };
   
-  /** функция для отладки формы profile при открытии (start) */
-  makeValidFormAtTheStart () {
-    this._setEventListeners ();
-  };
-
-  /** функция для отладки формы mesto при сохранении и повторном открытии (start) */
-  makeInvalidButtonAtTheStart () {
-    this._buttonElement.classList.add(this._buttonInvalid);
-    this._buttonElement.classList.remove(this._buttonValid);
-    this._buttonElement.setAttribute('disabled', true);
+  /** функция для отладки формы (start) */
+  resetValidation() {
+    this._toggleButtonState(); 
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement) 
+    });
   };
 };

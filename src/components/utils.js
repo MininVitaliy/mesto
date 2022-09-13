@@ -17,7 +17,8 @@ const selectorsCard = {
   popupProfile: 'popup_open_profil',
   popupAvatar: 'popup_open_avatar',
   popupDelete: 'popup_delete',
-  button: '.popup__button-save'
+  button: '.popup__button-save',
+  elementLikes: '.element__likes'
 };
 
 /** упорядочевания классов в params */

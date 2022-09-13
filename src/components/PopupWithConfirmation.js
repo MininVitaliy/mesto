@@ -22,13 +22,4 @@ export default  class PopupWithConfirmation extends Popup {
     this._id = id
     this._cardDelete = cardDelete;
   };
-  
-  qwrtyFotolement (cardElement) {
-    this._elementCard = cardElement;
-    console.log(cardElement)
-  }
 };
-
-
-
- 

@@ -6,9 +6,9 @@ export default class Section {
 
   /** метод создания первых 6 карточек из масива*/
   renderItems(items) {
-    items.forEach(item => {
+    items.reverse().forEach(item => {
      this._renderer(item);
-    });
+    })
   };
 
   /** метод добавления карточек на страницу*/
