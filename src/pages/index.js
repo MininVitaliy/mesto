@@ -79,15 +79,17 @@ const section = new Section ({
 const popupFormMesto = new PopupWithForm ({
   popupSelector: selectorsCard.popupMesto,
   sabmitForm: (formData) => {
-    renderLoading(true, popupMesto, popupFormMesto);
+    renderLoading(true, popupMesto);
     const {'popup__span_name-location': name, 'popup__span_foto-location': link} = formData; 
     api.addNewCardOnTheServer (name, link)
       .then((result) => {
       section.addItem(generateClassCard (result, api));    
       })
-      .then (() => renderLoading(false, popupMesto, popupFormMesto, 'Сохранение'))
-      .catch(err => console.log(err)
-    )
+      .then (() => popupFormMesto.close ())
+      .catch(err => console.log(err))
+      .finally(() => { 
+        renderLoading(false, popupMesto, 'Сохранение');
+    }); 
   },
   selector: selectorsCard
 });
@@ -96,15 +98,17 @@ const popupFormMesto = new PopupWithForm ({
 const popupWithConfirmation = new PopupWithConfirmation ({
   popupSelector: selectorsCard.popupDelete,
   sabmitForm: (id, deleteCard) => {
-    renderLoading(true, popupDelete, popupWithConfirmation);
+    renderLoading(true, popupDelete);
     api.deleteCardTheServer (id)
       .then(()=> {
         deleteCard.remove();
         deleteCard = null;
       })
-      .then (() => renderLoading(false, popupDelete, popupWithConfirmation, 'Да'))
-      .catch(err => console.log(err)
-    )
+      .then(() => popupWithConfirmation.close ())
+      .catch(err => console.log(err))
+      .finally(() => { 
+        renderLoading(false, popupDelete, 'Да'); 
+    }); 
   },
   selector: selectorsCard,
   api: api
@@ -115,13 +119,15 @@ popupWithConfirmation.setEventListeners ();
 const popupFormProfile = new PopupWithForm ({
   popupSelector: selectorsCard.popupProfile,
   sabmitForm: (formData) => {
-    renderLoading(true, popupProfile, popupFormProfile);
+    renderLoading(true, popupProfile);
     const {'popup__span_name-author': name, 'popup__span_name-job': link} = formData;
     api.changeUserProfile (name, link)
       .then(json => userInfo.initialUser (json))
-      .then (()=> renderLoading(false, popupProfile, popupFormProfile, 'Сохранение'))
-      .catch(err => console.log(err)
-    )
+      .then (()=> popupFormProfile.close())
+      .catch(err => console.log(err))
+      .finally(() => { 
+        renderLoading(false, popupProfile, 'Сохранение');
+    }); 
   },
   selector: selectorsCard
 });
@@ -130,13 +136,15 @@ const popupFormProfile = new PopupWithForm ({
 const popupFormAvatar = new PopupWithForm ({
   popupSelector: selectorsCard.popupAvatar,
   sabmitForm: (formData) => {
-    renderLoading(true, popupAvatar, popupFormAvatar);
+    renderLoading(true, popupAvatar);
     const {'popup__span_avatar': link} = formData;
     api.changeUserAvatar (link)
       .then(json => userInfo.initialAvatarNew (json))
-      .then(() => renderLoading(false, popupAvatar, popupFormAvatar, 'Сохранение'))
-      .catch(err => console.log(err)
-    )
+      .then(() => popupFormAvatar.close())
+      .catch(err => console.log(err))
+      .finally(() => { 
+        renderLoading(false, popupAvatar, 'Сохранение');
+    }); 
   },
   selector: selectorsCard
 });
@@ -214,12 +222,11 @@ Promise.all([api.getInitialCards(), api.getInitialUserMe ()])
 );
 
 /* функция измения кнопки sabmit на ативную при нажатии и обратно */
-function renderLoading (isLoading, selectorPopup, selectorForm, infoText) {
+function renderLoading (isLoading, selectorPopup, infoText) {
   const loadButton = selectorPopup.querySelector('.popup__button-save');
   if (isLoading) {
     loadButton.textContent = 'Сохранение...';
   } else {
     loadButton.textContent = `${infoText}`;
-    selectorForm.close ();
   }
 };
