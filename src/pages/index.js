@@ -44,7 +44,8 @@ function generateClassCard (item, api) {
           fotoElementLikes.textContent = res.likes.length
         })
         .then(() => fotoElementHeart.classList.remove(elementHeartActive))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err)
+      )
     },
     addLike: (itemId, fotoElementLikes, fotoElementHeart , elementHeartActive) => {
       api.addLike (itemId) 
@@ -52,13 +53,14 @@ function generateClassCard (item, api) {
           fotoElementLikes.textContent = res.likes.length
         })
         .then(() => fotoElementHeart.classList.add(elementHeartActive))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err)
+      )
     }
   });
   return card.createCard ();
 };
 
-/*создание любыых карточек и добавления*/
+/*создание любых карточек и добавления*/
 const section = new Section ({
   renderer: (item) => {
     if (item.owner._id !== myServerNumber) {
@@ -83,10 +85,9 @@ const popupFormMesto = new PopupWithForm ({
       .then((result) => {
       section.addItem(generateClassCard (result, api));    
       })
-      .catch(err => console.log(err))
-      .finally(() => {
-        renderLoading(false, popupMesto, popupFormMesto, 'Сохранение');
-    });
+      .then (() => renderLoading(false, popupMesto, popupFormMesto, 'Сохранение'))
+      .catch(err => console.log(err)
+    )
   },
   selector: selectorsCard
 });
@@ -100,11 +101,10 @@ const popupWithConfirmation = new PopupWithConfirmation ({
       .then(()=> {
         deleteCard.remove();
         deleteCard = null;
-    })
-      .catch(err => console.log(err))
-      .finally(() => {
-        renderLoading(false, popupDelete, popupWithConfirmation, 'Да');
-    })
+      })
+      .then (() => renderLoading(false, popupDelete, popupWithConfirmation, 'Да'))
+      .catch(err => console.log(err)
+    )
   },
   selector: selectorsCard,
   api: api
@@ -118,11 +118,10 @@ const popupFormProfile = new PopupWithForm ({
     renderLoading(true, popupProfile, popupFormProfile);
     const {'popup__span_name-author': name, 'popup__span_name-job': link} = formData;
     api.changeUserProfile (name, link)
-     .then(json => userInfo.initialUser (json))
-     .catch(err => console.log(err))
-     .finally(() => {
-      renderLoading(false, popupProfile, popupFormProfile, 'Сохранение');
-    });
+      .then(json => userInfo.initialUser (json))
+      .then (()=> renderLoading(false, popupProfile, popupFormProfile, 'Сохранение'))
+      .catch(err => console.log(err)
+    )
   },
   selector: selectorsCard
 });
@@ -134,11 +133,10 @@ const popupFormAvatar = new PopupWithForm ({
     renderLoading(true, popupAvatar, popupFormAvatar);
     const {'popup__span_avatar': link} = formData;
     api.changeUserAvatar (link)
-    .then(json => userInfo.initialAvatarNew (json))
-    .catch(err => console.log(err))
-    .finally(() => {
-      renderLoading(false, popupAvatar, popupFormAvatar, 'Сохранение');
-    });
+      .then(json => userInfo.initialAvatarNew (json))
+      .then(() => renderLoading(false, popupAvatar, popupFormAvatar, 'Сохранение'))
+      .catch(err => console.log(err)
+    )
   },
   selector: selectorsCard
 });
